@@ -1,4 +1,4 @@
-#include <SDL.h>
+#include "preCompiledHeader.h"
 
 #include "Game.h"
 
@@ -12,7 +12,6 @@ const int INTENDED_FPS = 60;
 const int INTENDED_FRAME_DURATION = 1000 / INTENDED_FPS;
 
 void EnforceFrameRate(Uint32 const frameStart);
-
 
 int SDL_main(int argc, char *argv[])
 {

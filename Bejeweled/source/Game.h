@@ -1,6 +1,8 @@
 #pragma once
-#include <SDL.h>
-#include <memory>
+#include "preCompiledHeader.h"
+
+#include "EventHandler.h"
+#include "gameEntities/Grid.h"
 
 class Game
 {
@@ -20,9 +22,14 @@ private:
 	bool isRunning;
 	SDL_Window* pWindow;
 	SDL_Renderer* pRenderer;
+	EventHandler* pEventHandler;
+	
+	Grid* pGrid;
 
 	void SetIsRunning(bool runningState) { isRunning = runningState; }
-	bool TryCreateWindow(const char* title, int initialWindowX, int initialWindowY, int windowWidth, int windowHeight);
 	
+	bool TryCreateWindow(const char* title, int initialWindowX, int initialWindowY, int windowWidth, int windowHeight);
+	bool TryCreateRenderer();
 };
+
 

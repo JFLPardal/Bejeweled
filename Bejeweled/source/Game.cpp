@@ -4,6 +4,7 @@
 
 Game::Game()
 {
+	pEventHandler = new EventHandler();
 }
 
 Game::~Game()
@@ -18,18 +19,18 @@ void Game::Init(const char* title, int initialWindowX, int initialWindowY, int w
 		return;
 	}
 
-	if (!TryCreateWindow(title, initialWindowX, initialWindowY, windowWidth, windowHeight))
-	{
-		return;
-	}
-	pRenderer = SDL_CreateRenderer(pWindow, -1, SDL_RENDERER_ACCELERATED); // this way we can control the frame rate manually
-	if (!pRenderer)
-	{
-		std::cout << "Game renderer was not created." << std::endl;
-		return;
-	}
+	if (!TryCreateWindow(title, initialWindowX, initialWindowY, windowWidth, windowHeight)) { return;}
+	if (!TryCreateRenderer()) { return; }
+
 	SDL_SetRenderDrawColor(pRenderer, 50, 200, 100, 255);
 	SetIsRunning(true);
+
+	pGrid = new Grid();
+	std::cout << *pGrid;
+	
+	std::cout << "\n"<< pGrid->GetStoneInPosition(Vector2(2, 2)).GetPosition().ToString();
+	std::cout << "\n"<< pGrid->GetStoneInPosition(Vector2(7, 7)).GetPosition().ToString();
+	std::cout << "\n"<< pGrid->GetStoneInPosition(Vector2(3, 6)).GetPosition().ToString();
 }
 
 void Game::HandleEvents()
@@ -40,11 +41,12 @@ void Game::HandleEvents()
 	{
 		SetIsRunning(false);
 	}
+	// TODO: move the above to EventHandler class
+	pEventHandler->CheckForEvents();
 }
 
 void Game::Update()
 {
-	std::cout << "frame" << std::endl;
 }
 
 void Game::Draw()
@@ -58,6 +60,8 @@ void Game::Clean()
 {
 	SDL_DestroyWindow(pWindow);
 	SDL_DestroyRenderer(pRenderer);
+	delete pEventHandler;
+	delete pGrid;
 	SDL_Quit(); // shut sdl subsystems
 }
 
@@ -67,6 +71,18 @@ bool Game::TryCreateWindow(const char* title, int initialWindowX, int initialWin
 	if (!pWindow)
 	{
 		std::cout << "Game window was not created." << std::endl;
+		SetIsRunning(false);
+		return false;
+	}
+	return true;
+}
+
+bool Game::TryCreateRenderer()
+{
+	pRenderer = SDL_CreateRenderer(pWindow, -1, SDL_RENDERER_ACCELERATED); // this way we can control the frame rate manually
+	if (!pRenderer)
+	{
+		std::cout << "Game renderer was not created." << std::endl;
 		SetIsRunning(false);
 		return false;
 	}
