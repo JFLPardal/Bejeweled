@@ -24,3 +24,8 @@ void Stone::UpdatePosition(Vector2 differenceFromOriginalPosition)
 {
 	position += differenceFromOriginalPosition;
 }
+
+Stone::~Stone()
+{
+	SDL_DestroyTexture(pSprite);
+}

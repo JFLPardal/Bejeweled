@@ -2,6 +2,7 @@
 #include "preCompiledHeader.h"
 
 #include "EventHandler.h"
+#include "TextureManager.h"
 #include "gameEntities/Grid.h"
 
 class Game
@@ -18,13 +19,14 @@ public:
 	void Clean();
 
 	inline bool IsRunning() const { return isRunning; }
+	static SDL_Renderer* pRenderer;
 private:
 	bool isRunning;
-	SDL_Window* pWindow;
-	SDL_Renderer* pRenderer;
-	EventHandler* pEventHandler;
+	SDL_Window* pWindow = nullptr;
+	EventHandler* pEventHandler= nullptr;
 	
-	Grid* pGrid;
+	Grid* pGrid = nullptr;
+	TextureManager* textureManager = nullptr;
 
 	void SetIsRunning(bool runningState) { isRunning = runningState; }
 	

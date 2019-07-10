@@ -2,9 +2,11 @@
 
 #include <iostream>
 
+SDL_Renderer* Game::pRenderer = nullptr;
+
 Game::Game()
+	:pEventHandler(new EventHandler()), textureManager(new TextureManager())
 {
-	pEventHandler = new EventHandler();
 }
 
 Game::~Game()
@@ -27,6 +29,11 @@ void Game::Init(const char* title, int initialWindowX, int initialWindowY, int w
 
 	pGrid = new Grid();
 	std::cout << *pGrid;
+
+	if (!textureManager->LoadTexture(textureNames::stones::tile_01.c_str()))
+	{
+		std::cout << "texture could not be lodaded";
+	}
 	
 	std::cout << "\n"<< pGrid->GetStoneInPosition(Vector2(2, 2)).GetPosition().ToString();
 	std::cout << "\n"<< pGrid->GetStoneInPosition(Vector2(7, 7)).GetPosition().ToString();
@@ -61,6 +68,7 @@ void Game::Clean()
 	SDL_DestroyWindow(pWindow);
 	SDL_DestroyRenderer(pRenderer);
 	delete pEventHandler;
+	delete textureManager;
 	delete pGrid;
 	SDL_Quit(); // shut sdl subsystems
 }
