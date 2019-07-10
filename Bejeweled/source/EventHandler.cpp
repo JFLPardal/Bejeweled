@@ -27,7 +27,7 @@ void EventHandler::CheckForEvents()
 		{
 			if (event.motion.x > 512)
 			{
-				std::cout << "halfway there";
+				//std::cout << "halfway there";
 			}
 		}
 	}

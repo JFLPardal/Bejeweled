@@ -4,6 +4,7 @@
 
 SDL_Renderer* Game::pRenderer = nullptr;
 
+Stone* stone_01, *stone_02;
 Game::Game()
 	:pEventHandler(new EventHandler()), textureManager(new TextureManager())
 {
@@ -27,17 +28,24 @@ void Game::Init(const char* title, int initialWindowX, int initialWindowY, int w
 	SDL_SetRenderDrawColor(pRenderer, 50, 200, 100, 255);
 	SetIsRunning(true);
 
+	// GRID
 	pGrid = new Grid();
 	std::cout << *pGrid;
 
-	if (!textureManager->LoadTexture(textureNames::stones::tile_01.c_str()))
-	{
-		std::cout << "texture could not be lodaded";
-	}
-	
+
 	std::cout << "\n"<< pGrid->GetStoneInPosition(Vector2(2, 2)).GetPosition().ToString();
 	std::cout << "\n"<< pGrid->GetStoneInPosition(Vector2(7, 7)).GetPosition().ToString();
 	std::cout << "\n"<< pGrid->GetStoneInPosition(Vector2(3, 6)).GetPosition().ToString();
+
+	// LOAD TEXTURES
+	if (!textureManager->LoadTexture(textureNames::stones::diamond.c_str()))
+	{
+		std::cout << "texture could not be lodaded";
+	}
+
+	// INIT STONES
+	stone_01 = new Stone(Vector2(0), StoneType::diamond);
+	stone_02 = new Stone(Vector2(80), StoneType::diamond);
 }
 
 void Game::HandleEvents()
@@ -59,7 +67,8 @@ void Game::Update()
 void Game::Draw()
 {
 	SDL_RenderClear(pRenderer);
-
+	stone_01->Draw();
+	stone_02->Draw();
 	SDL_RenderPresent(pRenderer);
 }
 

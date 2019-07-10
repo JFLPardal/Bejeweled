@@ -2,17 +2,19 @@
 
 #include "preCompiledHeader.h"
 
+#include "gameEntities/Stone.h"
+
 namespace textureNames
 {
 	static std::string STONES_DIRECTORY_PATH = "assets/sprites/stones/";
 	static std::string BACKGROUNDS_DIRECTORY_PATH = "assets/sprites/";
 	namespace stones
 	{
-		static const std::string tile_01 = STONES_DIRECTORY_PATH + "diamond.png";
-		static const std::string tile_02 = STONES_DIRECTORY_PATH + "flame.png";
-		static const std::string tile_03 = STONES_DIRECTORY_PATH + "moon.png";
-		static const std::string tile_04 = STONES_DIRECTORY_PATH + "skull.png";
-		static const std::string tile_05 = STONES_DIRECTORY_PATH + "star.png";
+		static const std::string diamond = STONES_DIRECTORY_PATH + "diamond.png";
+		static const std::string flame = STONES_DIRECTORY_PATH + "flame.png";
+		static const std::string moon = STONES_DIRECTORY_PATH + "moon.png";
+		static const std::string skull = STONES_DIRECTORY_PATH + "skull.png";
+		static const std::string star = STONES_DIRECTORY_PATH + "star.png";
 	}
 	namespace backgrounds
 	{
@@ -27,11 +29,13 @@ public:
 	~TextureManager();
 
 	static bool LoadTexture(const char* spritePath);
+	static SDL_Texture* GetStoneTexture(StoneType stoneType);
+	static void Draw(const Stone* stoneToDraw);
 
 private:
+	static SDL_Rect destinationRect;
 	static SDL_Surface* pSurfaceWithImage;
 	static SDL_Texture* pSprite;
-
-	// map <enum StoneType, SDL_Texture* pSprite> stones;
+	static std::map<StoneType, SDL_Texture*> stoneSprites;
 };
 
