@@ -31,7 +31,6 @@ public:
 	TextureManager();
 	~TextureManager();
 
-	static bool LoadTexture(const char* spritePath);
 	static SDL_Texture* GetStoneTexture(StoneType stoneType);
 	static void Draw(const Stone* stoneToDraw);
 
@@ -40,5 +39,8 @@ private:
 	static SDL_Surface* pSurfaceWithImage;
 	static SDL_Texture* pSprite;
 	static std::map<StoneType, SDL_Texture*> stoneSprites;
+
+	void LoadAllTextures();
+	void LoadTexture(StoneType stoneType, const char* spritePath);
 };
 

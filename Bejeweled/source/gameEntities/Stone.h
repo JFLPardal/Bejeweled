@@ -3,7 +3,9 @@
 #include "dataStructures/Vector2.h"
 #include "preCompiledHeader.h"
 
-enum StoneType { diamond = 0 };
+enum StoneType { diamond = 0, flame, moon, skull, star };
+// update this number if adding/removing to 'StoneType' 
+const static int STONE_TYPE_COUNT = 5;
 
 class Stone
 {

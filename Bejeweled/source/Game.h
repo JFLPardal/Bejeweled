@@ -31,7 +31,7 @@ private:
 	EventHandler* pEventHandler= nullptr;
 	
 	Grid* pGrid = nullptr;
-	TextureManager* textureManager = nullptr;
+	TextureManager* pTextureManager = nullptr;
 
 	void SetIsRunning(bool runningState) { isRunning = runningState; }
 	

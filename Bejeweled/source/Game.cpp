@@ -5,7 +5,7 @@
 SDL_Renderer* Game::pRenderer = nullptr;
 
 Game::Game()
-	:pEventHandler(new EventHandler()), textureManager(new TextureManager())
+	:pEventHandler(new EventHandler())
 {
 }
 
@@ -19,24 +19,12 @@ void Game::Init()
 
 	if (!TryCreateWindow(WINDOW_TITLE, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT)) { return;}
 	if (!TryCreateRenderer()) { return; }
+	pTextureManager = new TextureManager();
 
 	SDL_SetRenderDrawColor(pRenderer, 50, 200, 100, 255);
 	SetIsRunning(true);
 
-	// GRID
 	pGrid = new Grid();
-	std::cout << *pGrid;
-
-
-	std::cout << "\n"<< pGrid->GetStoneInPosition(Vector2(2, 2)).GetPosition().ToString();
-	std::cout << "\n"<< pGrid->GetStoneInPosition(Vector2(7, 7)).GetPosition().ToString();
-	std::cout << "\n"<< pGrid->GetStoneInPosition(Vector2(3, 6)).GetPosition().ToString();
-
-	// LOAD TEXTURES
-	if (!textureManager->LoadTexture(textureNames::stones::diamond.c_str()))
-	{
-		std::cout << "texture could not be lodaded";
-	}
 }
 
 void Game::HandleEvents()
@@ -67,7 +55,7 @@ void Game::Clean()
 	SDL_DestroyWindow(pWindow);
 	SDL_DestroyRenderer(pRenderer);
 	delete pEventHandler;
-	delete textureManager;
+	delete pTextureManager;
 	delete pGrid;
 	SDL_Quit(); // shut sdl subsystems
 }

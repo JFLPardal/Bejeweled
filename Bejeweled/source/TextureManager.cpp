@@ -12,23 +12,31 @@ TextureManager::TextureManager()
 	destinationRect.x = destinationRect.y = 0;
 	destinationRect.w = STONE_WIDTH;
 	destinationRect.h = STONE_HEIGHT;
-	std::cout << std::endl << "stoneSprites size: " << stoneSprites.size();
+
+	LoadAllTextures();
 }
 
-bool TextureManager::LoadTexture(const char * spritePath)
+void TextureManager::LoadAllTextures()
+{
+	LoadTexture(StoneType::diamond, textureNames::stones::diamond.c_str());
+	LoadTexture(StoneType::flame, textureNames::stones::flame.c_str());
+	LoadTexture(StoneType::moon, textureNames::stones::moon.c_str());
+	LoadTexture(StoneType::skull, textureNames::stones::skull.c_str());
+	LoadTexture(StoneType::star, textureNames::stones::star.c_str());
+	std::cout << std::endl << "stoneSprites size: " << stoneSprites.size();
+	SDL_FreeSurface(pSurfaceWithImage);
+}
+
+void TextureManager::LoadTexture(StoneType stoneType, const char * spritePath)
 {
 	pSurfaceWithImage = IMG_Load(spritePath);
 	if (pSurfaceWithImage == NULL)
 	{
 		printf("Unable to load image %s! SDL Error: %s\n", spritePath, SDL_GetError());
-		return false;
 	}
 	pSprite = SDL_CreateTextureFromSurface(Game::pRenderer, pSurfaceWithImage);
-	stoneSprites.emplace(StoneType::diamond, pSprite);
-	SDL_FreeSurface(pSurfaceWithImage);
-
-	std::cout << std::endl << "stoneSprites size: " << stoneSprites.size();
-	return true;
+	if(pSprite == NULL)	printf("Unable to CREATE TEXTURE %s! SDL Error: %s\n", spritePath, SDL_GetError());
+	stoneSprites.emplace(stoneType, pSprite);
 }
 
 SDL_Texture* TextureManager::GetStoneTexture(StoneType stoneType)

@@ -4,6 +4,7 @@
 
 Grid::Grid()
 {
+	srand(time(NULL));
 	CalculateGridStartingPosition();
 	Init();
 }
@@ -14,7 +15,7 @@ void Grid::Init()
 	{
 		for (int x = 0; x < GRID_WIDTH; x++)
 		{
-			grid[y * GRID_WIDTH + x] = Stone(CalculateStonePosition(x, y), StoneType::diamond);
+			grid[y * GRID_WIDTH + x] = Stone(CalculateStonePosition(x, y), GetRandomStoneType());
 		}
 	}
 }
@@ -36,7 +37,6 @@ inline void Grid::CalculateGridStartingPosition()
 	int initialY = (int) WINDOW_HEIGHT / 2 - (int) GRID_HEIGHT_IN_PIXELS / 2;
 
 	gridStartingPosition = Vector2(initialX, initialY);
-	std::cout << gridStartingPosition;
 }
 
 Stone Grid::GetStoneInPosition(const Vector2& stonePosition) const
@@ -62,6 +62,12 @@ Vector2 Grid::CalculateStonePosition(int x, int y)
 {
 	return Vector2(x * TOTAL_STONE_WIDTH + gridStartingPosition.X(),
 				   y * TOTAL_STONE_HEIGHT + gridStartingPosition.Y());
+}
+
+inline StoneType Grid::GetRandomStoneType()
+{
+	int randomIndex = rand() % STONE_TYPE_COUNT;
+	return (StoneType) randomIndex;
 }
 
 std::ostream& operator<<(std::ostream& oStream, Grid& grid)

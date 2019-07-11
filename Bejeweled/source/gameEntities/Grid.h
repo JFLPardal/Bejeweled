@@ -35,5 +35,6 @@ private:
 
 	void Init();
 	void inline CalculateGridStartingPosition();
-	Vector2 CalculateStonePosition(int x, int y);
+	Vector2 inline CalculateStonePosition(int x, int y);
+	StoneType inline GetRandomStoneType();
 };
