@@ -36,7 +36,7 @@ void Game::HandleEvents()
 		SetIsRunning(false);
 	}
 	// TODO: move the above to EventHandler class
-	pEventHandler->CheckForEvents();
+	pEventHandler->CheckForEvents(*pGrid);
 }
 
 void Game::Update()

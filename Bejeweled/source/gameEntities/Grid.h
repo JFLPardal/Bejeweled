@@ -16,6 +16,9 @@ static const int GRID_VERTICAL_PADDING = 2;
 // size in pixels occupied by each stone
 static const int TOTAL_STONE_WIDTH = STONE_WIDTH + GRID_VERTICAL_PADDING;
 static const int TOTAL_STONE_HEIGHT = STONE_HEIGHT + GRID_HORIZONTAL_PADDING;
+// size of the entire grid
+const int GRID_WIDTH_IN_PIXELS = GRID_WIDTH * TOTAL_STONE_WIDTH;
+const int GRID_HEIGHT_IN_PIXELS = GRID_HEIGHT * TOTAL_STONE_HEIGHT;
 
 class Grid
 {
@@ -23,6 +26,9 @@ public:
 	Grid();
 	
 	void Draw();
+	
+	void GridClicked(SDL_Event& event) const;
+	SDL_Rect GetGridRect() const;
 
 	Stone GetStoneInPosition(const Vector2& stonePosition) const;
 

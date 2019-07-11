@@ -167,6 +167,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="source\TextureManager.cpp" />
+    <ClCompile Include="source\UtilityFunctions.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\dataStructures\Vector2.h" />
@@ -176,6 +177,7 @@
     <ClInclude Include="source\Game.h" />
     <ClInclude Include="source\preCompiledHeader.h" />
     <ClInclude Include="source\TextureManager.h" />
+    <ClInclude Include="source\UtilityFunctions.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

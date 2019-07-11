@@ -28,11 +28,25 @@ void Grid::Draw()
 	}
 }
 
+void Grid::GridClicked(SDL_Event& gridPositionClicked) const
+{
+	std::cout << "CRICK!";
+}
+
+SDL_Rect Grid::GetGridRect() const
+{
+	SDL_Rect gridRect;
+
+	gridRect.x = gridStartingPosition.X();
+	gridRect.y = gridStartingPosition.Y();
+	gridRect.w = GRID_WIDTH_IN_PIXELS;
+	gridRect.h = GRID_HEIGHT_IN_PIXELS;
+
+	return gridRect;
+}
+
 inline void Grid::CalculateGridStartingPosition()
 {
-	const int GRID_WIDTH_IN_PIXELS = GRID_WIDTH * TOTAL_STONE_WIDTH;
-	const int GRID_HEIGHT_IN_PIXELS = GRID_HEIGHT * TOTAL_STONE_HEIGHT;
-
 	int initialX = (int) WINDOW_WIDTH / 2 - (int) GRID_WIDTH_IN_PIXELS / 2;
 	int initialY = (int) WINDOW_HEIGHT / 2 - (int) GRID_HEIGHT_IN_PIXELS / 2;
 

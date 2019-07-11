@@ -18,7 +18,7 @@ public:
 
 	Vector2& Add(const Vector2& vectorToAdd);
 
-	friend std::ostream& operator<<(std::ostream& oStream, Vector2& const vector);
+	friend std::ostream& operator<<(std::ostream& oStream, const Vector2& vector);
 	friend Vector2& operator+=(Vector2& vectorToUpdate, const Vector2& vectorIncrement);
 
 	std::string ToString();
