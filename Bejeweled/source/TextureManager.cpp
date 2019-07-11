@@ -10,7 +10,8 @@ std::map<StoneType, SDL_Texture*> TextureManager::stoneSprites;
 TextureManager::TextureManager()
 {
 	destinationRect.x = destinationRect.y = 0;
-	destinationRect.w = destinationRect.h = 70;
+	destinationRect.w = STONE_WIDTH;
+	destinationRect.h = STONE_HEIGHT;
 	std::cout << std::endl << "stoneSprites size: " << stoneSprites.size();
 }
 
@@ -46,6 +47,5 @@ void TextureManager::Draw(const Stone* stone)
 
 TextureManager::~TextureManager()
 {
-	SDL_FreeSurface(pSurfaceWithImage);
 	SDL_DestroyTexture(pSprite);
 }

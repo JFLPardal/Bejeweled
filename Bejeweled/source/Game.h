@@ -5,13 +5,18 @@
 #include "TextureManager.h"
 #include "gameEntities/Grid.h"
 
+// game window properties
+static const int WINDOW_WIDTH = 1024;
+static const int WINDOW_HEIGHT = 768;
+static const char* WINDOW_TITLE = "Bejeweled by Joao Pardal";
+
 class Game
 {
 public:
 	Game();
 	~Game();
 
-	void Init(const char* title, int initialWindowX, int initialWindowY, int windowWidth, int windowHeight);
+	void Init();
 
 	void HandleEvents();
 	void Update();

@@ -4,17 +4,12 @@
 
 SDL_Renderer* Game::pRenderer = nullptr;
 
-Stone* stone_01, *stone_02;
 Game::Game()
 	:pEventHandler(new EventHandler()), textureManager(new TextureManager())
 {
 }
 
-Game::~Game()
-{
-}
-
-void Game::Init(const char* title, int initialWindowX, int initialWindowY, int windowWidth, int windowHeight)
+void Game::Init()
 {
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0)
 	{
@@ -22,7 +17,7 @@ void Game::Init(const char* title, int initialWindowX, int initialWindowY, int w
 		return;
 	}
 
-	if (!TryCreateWindow(title, initialWindowX, initialWindowY, windowWidth, windowHeight)) { return;}
+	if (!TryCreateWindow(WINDOW_TITLE, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT)) { return;}
 	if (!TryCreateRenderer()) { return; }
 
 	SDL_SetRenderDrawColor(pRenderer, 50, 200, 100, 255);
@@ -42,10 +37,6 @@ void Game::Init(const char* title, int initialWindowX, int initialWindowY, int w
 	{
 		std::cout << "texture could not be lodaded";
 	}
-
-	// INIT STONES
-	stone_01 = new Stone(Vector2(0), StoneType::diamond);
-	stone_02 = new Stone(Vector2(80), StoneType::diamond);
 }
 
 void Game::HandleEvents()
@@ -67,8 +58,7 @@ void Game::Update()
 void Game::Draw()
 {
 	SDL_RenderClear(pRenderer);
-	stone_01->Draw();
-	stone_02->Draw();
+	pGrid->Draw();
 	SDL_RenderPresent(pRenderer);
 }
 
@@ -106,3 +96,6 @@ bool Game::TryCreateRenderer()
 	return true;
 }
 
+Game::~Game()
+{
+}
