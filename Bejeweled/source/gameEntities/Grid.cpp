@@ -4,7 +4,7 @@
 #include "UtilityFunctions.h"
 #include "GridConstants.h"
 
-
+#include <algorithm>
 Grid::Grid()
 	:Clickable(GC::INITIAL_X, GC::INITIAL_Y, GC::GRID_WIDTH_IN_PIXELS, GC::GRID_HEIGHT_IN_PIXELS)
 {
@@ -21,6 +21,13 @@ void Grid::Init()
 			grid[y * GC::GRID_WIDTH + x] = Stone(CalculateStonePosition(x, y), GetRandomStoneType());
 		}
 	}
+	// TEST ZONE
+	/*
+	std::sort(grid.begin(), grid.end(), [](const Stone& a, const Stone&b) {return a.GetStoneType() > b.GetStoneType(); });
+	for (auto& stone : grid)
+	{
+		std::cout << stone.GetStoneType();
+	}*/
 }
 
 void Grid::Draw()
@@ -31,10 +38,11 @@ void Grid::Draw()
 	}
 }
 
-void Grid::GridClicked(SDL_Event& gridPositionClicked) 
+Stone Grid::GridClicked(SDL_Event& gridPositionClicked) 
 {
 	Stone clickedStone = FindStoneInClickPosition(gridPositionClicked.motion);
 	std::cout << clickedStone.GetStoneType();
+	return clickedStone;
 }
 
 SDL_Rect Grid::GetGridRect() const

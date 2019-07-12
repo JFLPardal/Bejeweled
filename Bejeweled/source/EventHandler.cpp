@@ -3,6 +3,7 @@
 
 #include "EventHandler.h"
 #include "gameEntities/Grid.h"
+#include "gameEntities/ClickHandler.h"
 #include "UtilityFunctions.h"
 
 enum EventQueueState { Empty = 0, EventsPending = 1 };
@@ -12,7 +13,7 @@ EventHandler::EventHandler()
 }
 
 // this function checks for pending events once per frame
-void EventHandler::CheckForEvents(Grid& grid)
+void EventHandler::CheckForEvents(Grid& grid, ClickHandler& clickHandler)
 {
 	SDL_Event event;
 	while (SDL_PollEvent(&event) == EventQueueState::EventsPending)
@@ -21,14 +22,14 @@ void EventHandler::CheckForEvents(Grid& grid)
 
 		if (eventType == SDL_MOUSEBUTTONDOWN && event.button.button == SDL_BUTTON_LEFT)
 		{
-			std::cout << "mouse" << std::endl;
 			if (UtilityFunctions::IsInsideOf(event.motion, grid.GetGridRect()))
 			{
-				grid.GridClicked(event);
+				Stone clickedStone = grid.GridClicked(event);
+				clickHandler.StoneClicked(clickedStone);
 			}
 			else
 			{
-				std::cout << "esta fora!" << std::endl;
+				clickHandler.ClickedOutsideTheGrid();
 			}
 		}
 		if (eventType == SDL_EventType::SDL_MOUSEMOTION)

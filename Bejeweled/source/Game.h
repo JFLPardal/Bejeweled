@@ -4,10 +4,10 @@
 
 #include "gameEntities/GridConstants.h"
 
-#include "EventHandler.h"
-#include "TextureManager.h"
-
-#include "gameEntities/Grid.h"
+class EventHandler;
+class Grid;
+class TextureManager;
+class ClickHandler;
 
 class Game
 {
@@ -27,9 +27,9 @@ private:
 	bool isRunning;
 	SDL_Window* pWindow = nullptr;
 	EventHandler* pEventHandler= nullptr;
-	
 	Grid* pGrid = nullptr;
 	TextureManager* pTextureManager = nullptr;
+	ClickHandler* pClickHandler = nullptr;
 
 	void SetIsRunning(bool runningState) { isRunning = runningState; }
 	

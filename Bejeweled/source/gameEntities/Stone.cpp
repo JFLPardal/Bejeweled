@@ -4,18 +4,18 @@
 #include "TextureManager.h"
 
 Stone::Stone()
-	:position(Vector2()), Clickable(position.X(), position.Y(), GC::TOTAL_STONE_WIDTH, GC::TOTAL_STONE_HEIGHT)
+	:Clickable(-1, -1, GC::TOTAL_STONE_WIDTH, GC::TOTAL_STONE_HEIGHT)
 {
 }
 
 Stone::Stone(Vector2 pos, StoneType stoneType)
-	:position(pos), stoneType(stoneType), Clickable(pos.X(), pos.Y(), GC::TOTAL_STONE_WIDTH, GC::TOTAL_STONE_HEIGHT)
+	:stoneType(stoneType), Clickable(pos.X(), pos.Y(), GC::TOTAL_STONE_WIDTH, GC::TOTAL_STONE_HEIGHT)
 {
 }
 
 Vector2 Stone::GetPosition() const
 {
-	return position;
+	return Vector2(rect.x, rect.y);
 }
 
 StoneType Stone::GetStoneType() const
@@ -25,12 +25,19 @@ StoneType Stone::GetStoneType() const
 
 void Stone::SetNewPosition(Vector2 newPosition)
 {
-	position = newPosition;
+	rect.x = newPosition.X();
+	rect.y = newPosition.Y();
 }
 
 void Stone::UpdatePosition(Vector2 differenceFromOriginalPosition)
 {
-	position += differenceFromOriginalPosition;
+	rect.x += differenceFromOriginalPosition.X();
+	rect.y += differenceFromOriginalPosition.Y();
+}
+
+bool Stone::IsAdjacentTo(const Stone & stoneToCheck)
+{
+	return GetPosition().IsAdjacentTo(stoneToCheck.GetPosition());
 }
 
 void Stone::Draw()

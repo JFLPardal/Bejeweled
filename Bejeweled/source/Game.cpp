@@ -1,6 +1,9 @@
 #include "Game.h"
 
-#include <iostream>
+#include "gameEntities/ClickHandler.h"
+#include "EventHandler.h"
+#include "gameEntities/Grid.h"
+#include "TextureManager.h"
 
 SDL_Renderer* Game::pRenderer = nullptr;
 
@@ -13,7 +16,7 @@ void Game::Init()
 {
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0)
 	{
-		std::cout << "SDL_Init did not initialize properly." << std::endl;
+		printf( "SDL_Init did not initialize properly." );
 		return;
 	}
 
@@ -27,6 +30,7 @@ void Game::Init()
 	SetIsRunning(true);
 
 	pGrid = new Grid();
+	pClickHandler = new ClickHandler();
 }
 
 void Game::HandleEvents()
@@ -38,7 +42,7 @@ void Game::HandleEvents()
 		SetIsRunning(false);
 	}
 	// TODO: move the above to EventHandler class
-	pEventHandler->CheckForEvents(*pGrid);
+	pEventHandler->CheckForEvents(*pGrid, *pClickHandler);
 }
 
 void Game::Update()
@@ -59,6 +63,7 @@ void Game::Clean()
 	delete pEventHandler;
 	delete pTextureManager;
 	delete pGrid;
+	delete pClickHandler;
 	SDL_Quit(); // shut sdl subsystems
 }
 
@@ -67,7 +72,7 @@ bool Game::TryCreateWindow(const char* title, int initialWindowX, int initialWin
 	pWindow = SDL_CreateWindow(title, initialWindowX, initialWindowY, windowWidth, windowHeight, 0);
 	if (!pWindow)
 	{
-		std::cout << "Game window was not created." << std::endl;
+		printf("Game window was not created.");
 		SetIsRunning(false);
 		return false;
 	}
@@ -79,7 +84,7 @@ bool Game::TryCreateRenderer()
 	pRenderer = SDL_CreateRenderer(pWindow, -1, SDL_RENDERER_ACCELERATED); // this way we can control the frame rate manually
 	if (!pRenderer)
 	{
-		std::cout << "Game renderer was not created." << std::endl;
+		printf("Game renderer was not created.");
 		SetIsRunning(false);
 		return false;
 	}

@@ -17,6 +17,7 @@ public:
 	void SetY(int newY);
 
 	Vector2& Add(const Vector2& vectorToAdd);
+	bool IsAdjacentTo(const Vector2& vectorToCheck);
 
 	friend std::ostream& operator<<(std::ostream& oStream, const Vector2& vector);
 	friend Vector2& operator+=(Vector2& vectorToUpdate, const Vector2& vectorIncrement);

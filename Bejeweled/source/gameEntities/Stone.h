@@ -6,8 +6,7 @@
 #include "Clickable.h"
 
 enum StoneType { diamond = 0, flame, moon, skull, star };
-// update this number if adding/removing to 'StoneType' 
-const static int STONE_TYPE_COUNT = 5;
+const static int STONE_TYPE_COUNT = 5; // update this number if adding/removing to 'StoneType' 
 
 class Stone : public Clickable
 {
@@ -20,10 +19,10 @@ public:
 	void SetNewPosition(Vector2 newPosition);
 	void UpdatePosition(Vector2 differenceFromOriginalPosition);
 
+	bool IsAdjacentTo(const Stone& stoneToCheck);
 	void Draw();
 
 	~Stone();
 private:
-	Vector2 position;
 	StoneType stoneType;
 };

@@ -66,3 +66,8 @@ Vector2& Vector2::Add(const Vector2& vectorToAdd)
 	y += vectorToAdd.Y();
 	return *this;
 }
+
+bool Vector2::IsAdjacentTo(const Vector2& vectorToCheck)
+{
+	return false;
+}

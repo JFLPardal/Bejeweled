@@ -164,6 +164,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\gameEntities\ClickHandler.cpp" />
     <ClCompile Include="source\gameEntities\Clickable.cpp" />
     <ClCompile Include="source\dataStructures\Vector2.cpp" />
     <ClCompile Include="source\EventHandler.cpp" />
@@ -179,6 +180,7 @@
     <ClCompile Include="source\UtilityFunctions.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\gameEntities\ClickHandler.h" />
     <ClInclude Include="source\gameEntities\Clickable.h" />
     <ClInclude Include="source\dataStructures\Vector2.h" />
     <ClInclude Include="source\EventHandler.h" />
