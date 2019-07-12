@@ -7,5 +7,5 @@ class EventHandler
 public:
 	EventHandler();
 
-	void CheckForEvents(const Grid& grid);
+	void CheckForEvents(Grid& grid);
 };

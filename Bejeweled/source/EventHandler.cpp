@@ -12,7 +12,7 @@ EventHandler::EventHandler()
 }
 
 // this function checks for pending events once per frame
-void EventHandler::CheckForEvents(const Grid& grid)
+void EventHandler::CheckForEvents(Grid& grid)
 {
 	SDL_Event event;
 	while (SDL_PollEvent(&event) == EventQueueState::EventsPending)
@@ -24,21 +24,17 @@ void EventHandler::CheckForEvents(const Grid& grid)
 			std::cout << "mouse" << std::endl;
 			if (UtilityFunctions::IsInsideOf(event.motion, grid.GetGridRect()))
 			{
-				std::cout << "esta dentro!" << std::endl;
+				grid.GridClicked(event);
 			}
 			else
 			{
 				std::cout << "esta fora!" << std::endl;
 			}
-			//chek if click was done inside the grid
-				// if so, call grid.GridClicked(&event);
-			grid.GridClicked(event);
 		}
 		if (eventType == SDL_EventType::SDL_MOUSEMOTION)
 		{
 			if (event.motion.x > 512)
 			{
-				//std::cout << "halfway there";
 			}
 		}
 	}

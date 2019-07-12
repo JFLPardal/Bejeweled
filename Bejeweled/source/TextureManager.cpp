@@ -1,6 +1,7 @@
 #include "TextureManager.h"
 
 #include "Game.h"
+#include "gameEntities/GridConstants.h"
 
 SDL_Rect TextureManager::destinationRect;
 SDL_Surface* TextureManager::pSurfaceWithImage = nullptr;
@@ -10,8 +11,8 @@ std::map<StoneType, SDL_Texture*> TextureManager::stoneSprites;
 TextureManager::TextureManager()
 {
 	destinationRect.x = destinationRect.y = 0;
-	destinationRect.w = STONE_WIDTH;
-	destinationRect.h = STONE_HEIGHT;
+	destinationRect.w = STONE_CONSTANTS::STONE_WIDTH;
+	destinationRect.h = STONE_CONSTANTS::STONE_HEIGHT;
 
 	LoadAllTextures();
 }
@@ -23,7 +24,6 @@ void TextureManager::LoadAllTextures()
 	LoadTexture(StoneType::moon, textureNames::stones::moon.c_str());
 	LoadTexture(StoneType::skull, textureNames::stones::skull.c_str());
 	LoadTexture(StoneType::star, textureNames::stones::star.c_str());
-	std::cout << std::endl << "stoneSprites size: " << stoneSprites.size();
 	SDL_FreeSurface(pSurfaceWithImage);
 }
 

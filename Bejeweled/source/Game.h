@@ -1,14 +1,13 @@
 #pragma once
+
 #include "preCompiledHeader.h"
+
+#include "gameEntities/GridConstants.h"
 
 #include "EventHandler.h"
 #include "TextureManager.h"
-#include "gameEntities/Grid.h"
 
-// game window properties
-static const int WINDOW_WIDTH = 1024;
-static const int WINDOW_HEIGHT = 768;
-static const char* WINDOW_TITLE = "Bejeweled by Joao Pardal";
+#include "gameEntities/Grid.h"
 
 class Game
 {
@@ -17,7 +16,6 @@ public:
 	~Game();
 
 	void Init();
-
 	void HandleEvents();
 	void Update();
 	void Draw();

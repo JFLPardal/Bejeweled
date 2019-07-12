@@ -4,9 +4,6 @@
 
 #include "gameEntities/Stone.h"
 
-static const int STONE_WIDTH = 70;
-static const int STONE_HEIGHT = 70;
-
 namespace textureNames
 {
 	static std::string STONES_DIRECTORY_PATH = "assets/sprites/stones/";

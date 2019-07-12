@@ -30,6 +30,7 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
+    <CLRSupport>false</CLRSupport>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -37,12 +38,14 @@
     <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
+    <CLRSupport>false</CLRSupport>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
+    <CLRSupport>false</CLRSupport>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -50,6 +53,7 @@
     <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
+    <CLRSupport>false</CLRSupport>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -94,6 +98,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)external-libraries\SDL2\include;$(SolutionDir)Bejeweled\source;$(SolutionDir)Bejeweled\assets\sprites\stones;</AdditionalIncludeDirectories>
+      <CompileAsManaged>false</CompileAsManaged>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)external-libraries\SDL2\lib\x86</AdditionalLibraryDirectories>
@@ -110,6 +115,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)external-libraries\SDL2\include;$(SolutionDir)Bejeweled\source;$(SolutionDir)Bejeweled\assets\sprites\stones;</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>preCompiledHeader.h</PrecompiledHeaderFile>
+      <CompileAsManaged>false</CompileAsManaged>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)external-libraries\SDL2\lib\x64</AdditionalLibraryDirectories>
@@ -126,6 +132,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)external-libraries\SDL2\include;$(SolutionDir)Bejeweled\source;$(SolutionDir)Bejeweled\assets\sprites\stones;</AdditionalIncludeDirectories>
+      <CompileAsManaged>false</CompileAsManaged>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -146,6 +153,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)external-libraries\SDL2\include;$(SolutionDir)Bejeweled\source;$(SolutionDir)Bejeweled\assets\sprites\stones;</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>preCompiledHeader.h</PrecompiledHeaderFile>
+      <CompileAsManaged>false</CompileAsManaged>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -156,6 +164,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="source\gameEntities\Clickable.cpp" />
     <ClCompile Include="source\dataStructures\Vector2.cpp" />
     <ClCompile Include="source\EventHandler.cpp" />
     <ClCompile Include="source\gameEntities\Grid.cpp" />
@@ -170,9 +179,11 @@
     <ClCompile Include="source\UtilityFunctions.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\gameEntities\Clickable.h" />
     <ClInclude Include="source\dataStructures\Vector2.h" />
     <ClInclude Include="source\EventHandler.h" />
     <ClInclude Include="source\gameEntities\Grid.h" />
+    <ClInclude Include="source\gameEntities\GridConstants.h" />
     <ClInclude Include="source\gameEntities\Stone.h" />
     <ClInclude Include="source\Game.h" />
     <ClInclude Include="source\preCompiledHeader.h" />

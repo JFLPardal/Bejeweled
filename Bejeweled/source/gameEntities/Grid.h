@@ -2,32 +2,18 @@
 
 #include "preCompiledHeader.h"
 
+#include "GridConstants.h"
+#include "Clickable.h"
 #include "Stone.h"
 
-extern const int STONE_WIDTH;
-extern const int STONE_HEIGHT;
-
-// grid dimensions
-static const int GRID_WIDTH = 8;
-static const int GRID_HEIGHT = GRID_WIDTH;
-// padding between stones, pixels to the right and bottom of each stone that should not be occupied by other stones
-static const int GRID_HORIZONTAL_PADDING = 2;
-static const int GRID_VERTICAL_PADDING = 2;
-// size in pixels occupied by each stone
-static const int TOTAL_STONE_WIDTH = STONE_WIDTH + GRID_VERTICAL_PADDING;
-static const int TOTAL_STONE_HEIGHT = STONE_HEIGHT + GRID_HORIZONTAL_PADDING;
-// size of the entire grid
-const int GRID_WIDTH_IN_PIXELS = GRID_WIDTH * TOTAL_STONE_WIDTH;
-const int GRID_HEIGHT_IN_PIXELS = GRID_HEIGHT * TOTAL_STONE_HEIGHT;
-
-class Grid
+class Grid : public Clickable
 {
 public:
 	Grid();
 	
 	void Draw();
 	
-	void GridClicked(SDL_Event& event) const;
+	void GridClicked(SDL_Event& event);
 	SDL_Rect GetGridRect() const;
 
 	Stone GetStoneInPosition(const Vector2& stonePosition) const;
@@ -36,11 +22,11 @@ public:
 
 	Stone& operator[](const Vector2& position);
 private:
-	std::array<Stone, GRID_HEIGHT * GRID_WIDTH> grid;
-	Vector2 gridStartingPosition;
+	std::array<Stone, 64> grid;
+	//std::array<Stone, GRID_CONSTANTS::GRID_WIDTH * GRID_CONSTANTS::GRID_WIDTH> grid;
 
 	void Init();
-	void inline CalculateGridStartingPosition();
 	Vector2 inline CalculateStonePosition(int x, int y);
 	StoneType inline GetRandomStoneType();
+	Stone& FindStoneInClickPosition(SDL_MouseMotionEvent positionOfClick);
 };

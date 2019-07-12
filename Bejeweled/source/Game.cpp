@@ -17,7 +17,9 @@ void Game::Init()
 		return;
 	}
 
-	if (!TryCreateWindow(WINDOW_TITLE, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT)) { return;}
+	if (!TryCreateWindow(WINDOW_CONSTANTS::WINDOW_TITLE, 
+						SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 
+						WC::WINDOW_WIDTH, WC::WINDOW_HEIGHT)) { return;}
 	if (!TryCreateRenderer()) { return; }
 	pTextureManager = new TextureManager();
 
