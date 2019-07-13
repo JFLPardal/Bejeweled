@@ -5,8 +5,9 @@
 #include <SDL_image.h>
 
 // data structures
-#include <array>
 #include <string>
+#include <array>
+#include <vector>
 #include <map>
 
 // other utilities

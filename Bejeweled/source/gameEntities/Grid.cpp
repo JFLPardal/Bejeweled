@@ -1,10 +1,12 @@
 #include "Grid.h"
 
-#include "Game.h"
-#include "UtilityFunctions.h"
-#include "GridConstants.h"
+//#include <algorithm>
 
-#include <algorithm>
+#include "Game.h"
+#include "GridConstants.h"
+#include "dataStructures/SequenceInfo.h"
+#include "UtilityFunctions.h"
+
 Grid::Grid()
 	:Clickable(GC::INITIAL_X, GC::INITIAL_Y, GC::GRID_WIDTH_IN_PIXELS, GC::GRID_HEIGHT_IN_PIXELS)
 {
@@ -18,16 +20,21 @@ void Grid::Init()
 	{
 		for (int x = 0; x < GC::GRID_WIDTH; x++)
 		{
-			grid[y * GC::GRID_WIDTH + x] = Stone(CalculateStonePosition(x, y), GetRandomStoneType());
+			grid[y * GC::GRID_WIDTH + x] = Stone(Vector2(x, y), CalculateStonePosition(x, y), GetRandomStoneType());
 		}
 	}
 	// TEST ZONE
-	/*
-	std::sort(grid.begin(), grid.end(), [](const Stone& a, const Stone&b) {return a.GetStoneType() > b.GetStoneType(); });
+	// sort grid by index
+	std::sort(grid.begin(), grid.end(), [](const Stone& a, const Stone&b) 
+										{
+											Vector2 aIndex = a.GetIndexInGrid();
+											Vector2 bIndex = b.GetIndexInGrid();
+											return aIndex.Y() * GC::GRID_WIDTH + aIndex.X() < bIndex.Y() * GC::GRID_WIDTH + bIndex.X();
+										});
 	for (auto& stone : grid)
 	{
-		std::cout << stone.GetStoneType();
-	}*/
+		std::cout << stone.GetIndexInGrid().ToString();
+	}
 }
 
 void Grid::Draw()
@@ -54,6 +61,34 @@ Stone Grid::GetStoneInPosition(const Vector2& stonePosition) const
 {
 	Stone stone = grid[stonePosition.Y() * GC::GRID_WIDTH + stonePosition.X()];
 	return stone;
+}
+
+SequenceInfo Grid::StoneSwapSuccesful(const Stone& firstStone, const Stone& secondStone)
+{
+	printf("Tried to swap type %d (%d,%d) with type %d (%d,%d).\n", firstStone.GetStoneType(), firstStone.GetIndexInGrid().X(), firstStone.GetIndexInGrid().Y(),
+		secondStone.GetStoneType(), secondStone.GetIndexInGrid().X(), secondStone.GetIndexInGrid().Y());
+	
+	// change the 2 stones index in grid
+
+	//check if column or row is made with this swap
+	return SequenceInfo(firstStone, secondStone);
+}
+
+void Grid::DeleteStonesInGrid(SequenceInfo stonesToDelete)
+{
+	for (auto& stone : stonesToDelete.GetStonesToDelete())
+	{
+		DeleteStoneFromGrid(stone);
+	}
+}
+
+void Grid::DeleteStoneFromGrid(Stone& stoneToDelete)
+{
+	int gridX = stoneToDelete.GetIndexInGrid().X();
+	int gridY = stoneToDelete.GetIndexInGrid().Y();
+	StoneType st = GetRandomStoneType();	// TODO delete this line after deleting printf
+	grid[gridY * GRID_CONSTANTS::GRID_WIDTH + gridX] = Stone(Vector2(gridX, gridY), CalculateStonePosition(gridX, gridY), st);
+	printf("Deleted grid pos (%d,%d), replaced with type %d.\n", gridX, gridY, st);
 }
 
 Stone& Grid::operator[](const Vector2& position)

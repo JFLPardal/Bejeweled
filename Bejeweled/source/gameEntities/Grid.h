@@ -8,6 +8,8 @@
 
 const int GRID_DIMENSION = 64; // can't get 'GridConstants.h' constants to use in array decl...
 
+class SequenceInfo;
+
 class Grid : public Clickable
 {
 public:
@@ -15,13 +17,14 @@ public:
 	
 	void Draw();
 	
-	Stone GridClicked(SDL_Event& event);
 	SDL_Rect GetGridRect() const;
-
 	Stone GetStoneInPosition(const Vector2& stonePosition) const;
 
-	friend std::ostream& operator<<(std::ostream& os, Grid& grid);
+	Stone GridClicked(SDL_Event& event);
+	SequenceInfo StoneSwapSuccesful(const Stone& firstStone, const Stone& secondStone); 
+	void DeleteStonesInGrid(SequenceInfo stonesToDelete);
 
+	friend std::ostream& operator<<(std::ostream& os, Grid& grid);
 	Stone& operator[](const Vector2& position);
 private:
 	std::array<Stone, GRID_DIMENSION> grid;
@@ -31,6 +34,5 @@ private:
 	Vector2 inline CalculateStonePosition(int x, int y);
 	StoneType inline GetRandomStoneType();
 	Stone& FindStoneInClickPosition(SDL_MouseMotionEvent positionOfClick);
-
-	bool CompareIndex(const Stone& a, const Stone& b);
+	void DeleteStoneFromGrid(Stone& stoneToDelete);
 };

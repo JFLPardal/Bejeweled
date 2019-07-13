@@ -2,6 +2,8 @@
 
 #include "preCompiledHeader.h"
 
+enum SwapDirection { left, up, right, down };
+
 class Vector2
 {
 public:
@@ -26,3 +28,4 @@ public:
 private:
 	int x, y;
 };
+

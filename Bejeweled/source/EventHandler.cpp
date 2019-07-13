@@ -15,13 +15,30 @@ EventHandler::EventHandler()
 // this function checks for pending events once per frame
 void EventHandler::CheckForEvents(Grid& grid, ClickHandler& clickHandler)
 {
-	SDL_Event event;
-	while (SDL_PollEvent(&event) == EventQueueState::EventsPending)
-	{
-		Uint32 eventType = event.type;
-
+	SDL_Event event; 
+	SDL_PollEvent(&event);
+	/*while (SDL_PollEvent(&event) != 0)//EventQueueState::EventsPending)
+	{*/
+		switch (event.type)
+		{
+		case SDL_MOUSEBUTTONDOWN:
+			std::cout << "event" << std::endl;
+			if (UtilityFunctions::IsInsideOf(event.motion, grid.GetGridRect()))
+			{
+				Stone clickedStone = grid.GridClicked(event);
+				clickHandler.StoneClicked(clickedStone, grid);
+			}
+			else
+			{
+				clickHandler.ClickedOutsideTheGrid();
+			}
+			break;
+		default:
+			break;
+		}/*
 		if (eventType == SDL_MOUSEBUTTONDOWN && event.button.button == SDL_BUTTON_LEFT)
 		{
+			std::cout << "event" << std::endl;
 			if (UtilityFunctions::IsInsideOf(event.motion, grid.GetGridRect()))
 			{
 				Stone clickedStone = grid.GridClicked(event);
@@ -37,6 +54,6 @@ void EventHandler::CheckForEvents(Grid& grid, ClickHandler& clickHandler)
 			if (event.motion.x > 512)
 			{
 			}
-		}
-	}
+		}*/
+	//}
 }

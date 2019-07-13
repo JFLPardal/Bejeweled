@@ -69,5 +69,19 @@ Vector2& Vector2::Add(const Vector2& vectorToAdd)
 
 bool Vector2::IsAdjacentTo(const Vector2& vectorToCheck)
 {
+	if (x == vectorToCheck.x)
+	{
+		if (y == vectorToCheck.y + 1 || y == vectorToCheck.y - 1)
+		{
+			return true;
+		}
+	}
+	else if (y == vectorToCheck.y)
+	{
+		if (x == vectorToCheck.x + 1 || x == vectorToCheck.x - 1)
+		{
+			return true;
+		}
+	}
 	return false;
 }

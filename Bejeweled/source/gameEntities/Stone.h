@@ -12,12 +12,13 @@ class Stone : public Clickable
 {
 public:
 	Stone();
-	Stone(Vector2 pos, StoneType stoneType);
+	Stone(Vector2 indexInGrid, Vector2 pos, StoneType stoneType);
 
 	Vector2 GetPosition()const;
+	Vector2 GetIndexInGrid() const;
 	StoneType GetStoneType() const;
 	void SetNewPosition(Vector2 newPosition);
-	void UpdatePosition(Vector2 differenceFromOriginalPosition);
+	void UpdatePosition(SwapDirection differenceFromOriginalPosition, int timesToUpdate = 1);
 
 	bool IsAdjacentTo(const Stone& stoneToCheck);
 	void Draw();
@@ -25,4 +26,5 @@ public:
 	~Stone();
 private:
 	StoneType stoneType;
+	Vector2 indexInGrid;
 };

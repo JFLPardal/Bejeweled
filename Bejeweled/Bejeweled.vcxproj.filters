@@ -48,6 +48,9 @@
     <ClCompile Include="source\gameEntities\ClickHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\dataStructures\SequenceInfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Game.h">
@@ -81,6 +84,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\gameEntities\ClickHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\dataStructures\SequenceInfo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
