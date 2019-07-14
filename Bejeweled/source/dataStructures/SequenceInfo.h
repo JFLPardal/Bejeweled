@@ -14,8 +14,8 @@ public:
 
 	bool IsSequence() { return isSequence; }
 	bool SequenceIsColumn() { return deleteColumn; }
+	int GetBottomCoordenate();
 	std::vector<Stone> GetStonesToDelete() { return stonesToDelete; }
-
 private:
 	bool isSequence;
 	bool deleteColumn;

@@ -80,38 +80,53 @@ void Grid::UpdateStonesInGrid(SequenceInfo stonesToDelete)
 	{
 		if (stonesToDelete.SequenceIsColumn())
 		{
-
+			UpdateColumnAboveSequence(stone, stonesToDelete);
 		}
 		else
 		{
 			UpdateRowsAboveSequence(stone);
 		}
-		//DeleteStoneFromGrid(stone);
 	}
 }
 
 void Grid::UpdateRowsAboveSequence(Stone& stone)
 {
-	printf("updated rows\n");
+	printf("Updated rows.\n");
 	Vector2 stoneGridIndex = stone.GetIndexInGrid();
+
 	for (int y = stoneGridIndex.Y(); y > 0; y--)
 	{
 		int gridIndexForCurrentStone = y * GRID_CONSTANTS::GRID_WIDTH + stoneGridIndex.X();
 		int gridIndexForStoneAbove = (y - 1) * GRID_CONSTANTS::GRID_WIDTH + stoneGridIndex.X();
 		StoneType typeOfStoneAbove = grid[gridIndexForStoneAbove].GetStoneType();
+
 		grid[gridIndexForCurrentStone].UpdateStoneType(typeOfStoneAbove);
-		//stone.UpdateSpritePosition(SwapDirection::down);
 	}
-	grid[stoneGridIndex.X()].UpdateStoneType(GetRandomStoneType());// = Stone(Vector2(stoneGridIndex.X(), 0), CalculateStonePosition(stoneGridIndex.X(), 0), GetRandomStoneType());
+	grid[stoneGridIndex.X()].UpdateStoneType(GetRandomStoneType());
 }
 
-void Grid::DeleteStoneFromGrid(Stone& stoneToDelete)
+void Grid::UpdateColumnAboveSequence(Stone& stone, SequenceInfo sequence)
 {
-	int gridX = stoneToDelete.GetIndexInGrid().X();
-	int gridY = stoneToDelete.GetIndexInGrid().Y();
-	StoneType st = GetRandomStoneType();	// TODO delete this line after deleting printf
-	grid[gridY * GRID_CONSTANTS::GRID_WIDTH + gridX] = Stone(Vector2(gridX, gridY), CalculateStonePosition(gridX, gridY), st);
-	printf("Deleted grid pos (%d,%d), replaced with type %d.\n", gridX, gridY, st);
+	printf("Updated columns.\n");
+	Vector2 stoneGridIndex = stone.GetIndexInGrid();
+	int sequenceNumberOfStones = sequence.GetStonesToDelete().size();
+	int bottomCoordinate = sequence.GetBottomCoordenate();
+
+	for (int y = bottomCoordinate; y >= sequenceNumberOfStones; y--) // lower rest of the column
+	{
+		int gridIndexForCurrentStone = y * GRID_CONSTANTS::GRID_WIDTH + stoneGridIndex.X();
+		int gridIndexForFirstNonSequence = (y - sequenceNumberOfStones) * GRID_CONSTANTS::GRID_WIDTH + stoneGridIndex.X();
+		StoneType typeOfFirstNonSequenceStone = grid[gridIndexForFirstNonSequence].GetStoneType();
+
+		grid[gridIndexForCurrentStone].UpdateStoneType(typeOfFirstNonSequenceStone);
+	}
+	for (int y = sequenceNumberOfStones-1; y >= 0; y--) // generates stones in the 'holes' left at the top
+	{
+		int gridIndexForCurrentStone = y * GRID_CONSTANTS::GRID_WIDTH + stoneGridIndex.X();
+		
+		grid[gridIndexForCurrentStone].UpdateStoneType(GetRandomStoneType());
+	}
+
 }
 
 Stone& Grid::operator[](const Vector2& position)

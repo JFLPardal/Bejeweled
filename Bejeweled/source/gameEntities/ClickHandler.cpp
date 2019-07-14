@@ -20,9 +20,7 @@ void ClickHandler::StoneClicked(Stone& clickedStone, Grid& grid)
 			{
 				// grid.ConfirmSwap(firstClickedStone, clickedStone);
 				grid.UpdateStonesInGrid(possibleSequence);
-				// grid.GenerateNewStones();
 			}
-			//clickedStone.UpdateSpritePosition(SwapDirection::up);
 		}
 		else
 		{

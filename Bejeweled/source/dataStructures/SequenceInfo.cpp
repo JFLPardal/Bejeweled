@@ -37,3 +37,9 @@ SequenceInfo::SequenceInfo(const Stone& firstStone, const Stone& lastStone)
 SequenceInfo::~SequenceInfo()
 {
 }
+
+// UPDATE THIS, NOT WORKING PROPERLY
+int SequenceInfo::GetBottomCoordenate()
+{
+	return stonesToDelete[0].GetIndexInGrid().Y();
+}

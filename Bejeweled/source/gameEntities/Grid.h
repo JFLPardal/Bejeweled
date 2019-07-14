@@ -37,6 +37,7 @@ private:
 	StoneType inline GetRandomStoneType();
 
 	Stone& FindStoneInClickPosition(SDL_MouseMotionEvent positionOfClick);
-	void DeleteStoneFromGrid(Stone& stoneToDelete);
-	void UpdateRowsAboveSequence(Stone & stone);
+
+	void UpdateRowsAboveSequence(Stone& stone);
+	void UpdateColumnAboveSequence(Stone& stone, SequenceInfo sequence);
 };
