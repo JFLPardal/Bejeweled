@@ -15,9 +15,9 @@ public:
 	bool IsSequence() { return isSequence; }
 	bool SequenceIsColumn() { return deleteColumn; }
 	int GetBottomCoordenate();
-	std::vector<Stone> GetStonesToDelete() { return stonesToDelete; }
+	std::vector<Vector2> GetStonesToDelete() { return sequenceIndexes; }
 private:
 	bool isSequence;
 	bool deleteColumn;
-	std::vector<Stone> stonesToDelete;
+	std::vector<Vector2> sequenceIndexes;
 };

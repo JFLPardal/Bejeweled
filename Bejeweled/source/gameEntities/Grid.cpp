@@ -23,18 +23,6 @@ void Grid::Init()
 			grid[y * GC::GRID_WIDTH + x] = Stone(Vector2(x, y), CalculateStonePosition(x, y), GetRandomStoneType());
 		}
 	}
-	// TEST ZONE
-	// sort grid by index
-	std::sort(grid.begin(), grid.end(), [](const Stone& a, const Stone&b) 
-										{
-											Vector2 aIndex = a.GetIndexInGrid();
-											Vector2 bIndex = b.GetIndexInGrid();
-											return aIndex.Y() * GC::GRID_WIDTH + aIndex.X() < bIndex.Y() * GC::GRID_WIDTH + bIndex.X();
-										});
-	for (auto& stone : grid)
-	{
-		std::cout << stone.GetIndexInGrid().ToString();
-	}
 }
 
 void Grid::Draw()
@@ -76,23 +64,26 @@ SequenceInfo Grid::StoneSwapSuccesful(const Stone& firstStone, const Stone& seco
 
 void Grid::UpdateStonesInGrid(SequenceInfo stonesToDelete)
 {
-	for (auto& stone : stonesToDelete.GetStonesToDelete())
+	if (stonesToDelete.SequenceIsColumn())
 	{
-		if (stonesToDelete.SequenceIsColumn())
-		{
-			UpdateColumnAboveSequence(stone, stonesToDelete);
-		}
-		else
-		{
-			UpdateRowsAboveSequence(stone);
-		}
+		UpdateColumnAboveSequence(stonesToDelete.GetStonesToDelete()[0], stonesToDelete);
 	}
+	else 
+	{
+		for (auto& stoneGridIndex : stonesToDelete.GetStonesToDelete())
+		{
+			
+				UpdateRowsAboveSequence(stoneGridIndex);
+		
+		}
+
+	}
+	
 }
 
-void Grid::UpdateRowsAboveSequence(Stone& stone)
+void Grid::UpdateRowsAboveSequence(Vector2& stoneGridIndex)
 {
 	printf("Updated rows.\n");
-	Vector2 stoneGridIndex = stone.GetIndexInGrid();
 
 	for (int y = stoneGridIndex.Y(); y > 0; y--)
 	{
@@ -105,10 +96,9 @@ void Grid::UpdateRowsAboveSequence(Stone& stone)
 	grid[stoneGridIndex.X()].UpdateStoneType(GetRandomStoneType());
 }
 
-void Grid::UpdateColumnAboveSequence(Stone& stone, SequenceInfo sequence)
+void Grid::UpdateColumnAboveSequence(Vector2& stoneGridIndex, SequenceInfo sequence)
 {
 	printf("Updated columns.\n");
-	Vector2 stoneGridIndex = stone.GetIndexInGrid();
 	int sequenceNumberOfStones = sequence.GetStonesToDelete().size();
 	int bottomCoordinate = sequence.GetBottomCoordenate();
 
@@ -126,7 +116,6 @@ void Grid::UpdateColumnAboveSequence(Stone& stone, SequenceInfo sequence)
 		
 		grid[gridIndexForCurrentStone].UpdateStoneType(GetRandomStoneType());
 	}
-
 }
 
 Stone& Grid::operator[](const Vector2& position)

@@ -38,6 +38,6 @@ private:
 
 	Stone& FindStoneInClickPosition(SDL_MouseMotionEvent positionOfClick);
 
-	void UpdateRowsAboveSequence(Stone& stone);
-	void UpdateColumnAboveSequence(Stone& stone, SequenceInfo sequence);
+	void UpdateRowsAboveSequence(Vector2& stoneGridIndex);
+	void UpdateColumnAboveSequence(Vector2& stoneGridIndex, SequenceInfo sequence);
 };
