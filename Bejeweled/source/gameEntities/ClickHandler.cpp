@@ -5,7 +5,6 @@
 
 ClickHandler::ClickHandler()
 {
-	std::cout << "click gandelr created" << std::endl;
 }
 
 void ClickHandler::StoneClicked(Stone& clickedStone, Grid& grid)
@@ -20,11 +19,10 @@ void ClickHandler::StoneClicked(Stone& clickedStone, Grid& grid)
 			if (possibleSequence.IsSequence())
 			{
 				// grid.ConfirmSwap(firstClickedStone, clickedStone);
-				grid.DeleteStonesInGrid(possibleSequence);
-				// grid.UpdateStonesPositions();
+				grid.UpdateStonesInGrid(possibleSequence);
 				// grid.GenerateNewStones();
 			}
-			clickedStone.UpdatePosition(SwapDirection::down);
+			//clickedStone.UpdateSpritePosition(SwapDirection::up);
 		}
 		else
 		{

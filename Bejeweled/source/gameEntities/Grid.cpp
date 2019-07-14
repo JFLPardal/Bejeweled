@@ -74,12 +74,35 @@ SequenceInfo Grid::StoneSwapSuccesful(const Stone& firstStone, const Stone& seco
 	return SequenceInfo(firstStone, secondStone);
 }
 
-void Grid::DeleteStonesInGrid(SequenceInfo stonesToDelete)
+void Grid::UpdateStonesInGrid(SequenceInfo stonesToDelete)
 {
 	for (auto& stone : stonesToDelete.GetStonesToDelete())
 	{
-		DeleteStoneFromGrid(stone);
+		if (stonesToDelete.SequenceIsColumn())
+		{
+
+		}
+		else
+		{
+			UpdateRowsAboveSequence(stone);
+		}
+		//DeleteStoneFromGrid(stone);
 	}
+}
+
+void Grid::UpdateRowsAboveSequence(Stone& stone)
+{
+	printf("updated rows\n");
+	Vector2 stoneGridIndex = stone.GetIndexInGrid();
+	for (int y = stoneGridIndex.Y(); y > 0; y--)
+	{
+		int gridIndexForCurrentStone = y * GRID_CONSTANTS::GRID_WIDTH + stoneGridIndex.X();
+		int gridIndexForStoneAbove = (y - 1) * GRID_CONSTANTS::GRID_WIDTH + stoneGridIndex.X();
+		StoneType typeOfStoneAbove = grid[gridIndexForStoneAbove].GetStoneType();
+		grid[gridIndexForCurrentStone].UpdateStoneType(typeOfStoneAbove);
+		//stone.UpdateSpritePosition(SwapDirection::down);
+	}
+	grid[stoneGridIndex.X()].UpdateStoneType(GetRandomStoneType());// = Stone(Vector2(stoneGridIndex.X(), 0), CalculateStonePosition(stoneGridIndex.X(), 0), GetRandomStoneType());
 }
 
 void Grid::DeleteStoneFromGrid(Stone& stoneToDelete)

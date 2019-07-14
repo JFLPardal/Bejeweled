@@ -85,3 +85,22 @@ bool Vector2::IsAdjacentTo(const Vector2& vectorToCheck)
 	}
 	return false;
 }
+
+Vector2 Vector2::GetVectorFromDirection(SwapDirection direction)
+{
+	switch (direction)
+	{
+	case up:
+		return Vector2(0, -1); // origin is top left corner!
+		break;
+	case right:
+		return Vector2(1, 0);
+		break;
+	case down:
+		return Vector2(0, 1);
+		break;
+	case left:
+		return Vector2(-1, 0);
+		break;
+	}
+}

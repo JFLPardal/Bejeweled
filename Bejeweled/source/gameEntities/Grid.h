@@ -22,7 +22,8 @@ public:
 
 	Stone GridClicked(SDL_Event& event);
 	SequenceInfo StoneSwapSuccesful(const Stone& firstStone, const Stone& secondStone); 
-	void DeleteStonesInGrid(SequenceInfo stonesToDelete);
+	void UpdateStonesInGrid(SequenceInfo stonesToDelete);
+
 
 	friend std::ostream& operator<<(std::ostream& os, Grid& grid);
 	Stone& operator[](const Vector2& position);
@@ -31,8 +32,11 @@ private:
 	//std::array<Stone, GRID_CONSTANTS::GRID_WIDTH * GRID_CONSTANTS::GRID_WIDTH> grid;
 
 	void Init();
+
 	Vector2 inline CalculateStonePosition(int x, int y);
 	StoneType inline GetRandomStoneType();
+
 	Stone& FindStoneInClickPosition(SDL_MouseMotionEvent positionOfClick);
 	void DeleteStoneFromGrid(Stone& stoneToDelete);
+	void UpdateRowsAboveSequence(Stone & stone);
 };

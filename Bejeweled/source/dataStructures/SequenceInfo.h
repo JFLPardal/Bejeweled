@@ -13,9 +13,11 @@ public:
 	~SequenceInfo();
 
 	bool IsSequence() { return isSequence; }
+	bool SequenceIsColumn() { return deleteColumn; }
 	std::vector<Stone> GetStonesToDelete() { return stonesToDelete; }
 
 private:
 	bool isSequence;
+	bool deleteColumn;
 	std::vector<Stone> stonesToDelete;
 };

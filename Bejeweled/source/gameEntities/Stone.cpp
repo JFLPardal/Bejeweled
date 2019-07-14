@@ -27,17 +27,22 @@ StoneType Stone::GetStoneType() const
 {
 	return stoneType;
 }
-
+void Stone::UpdateStoneType(StoneType newType)
+{
+	stoneType = newType;
+}
+/*
 void Stone::SetNewPosition(Vector2 newPosition)
 {
 	rect.x = newPosition.X();
 	rect.y = newPosition.Y();
-}
+}*/
 
-void Stone::UpdatePosition(SwapDirection differenceFromOriginalPosition, int timesToUpdate)
-{/*
-	rect.x += differenceFromOriginalPosition.X();
-	rect.y += differenceFromOriginalPosition.Y();*/
+void Stone::UpdateSpritePosition(SwapDirection differenceFromOriginalPosition, int timesToUpdate)
+{
+	Vector2 updateVector = Vector2::GetVectorFromDirection(differenceFromOriginalPosition);
+	rect.x += updateVector.X() * GRID_CONSTANTS::TOTAL_STONE_WIDTH* timesToUpdate;
+	rect.y += updateVector.Y() * GRID_CONSTANTS::TOTAL_STONE_HEIGHT *timesToUpdate;
 }
 
 bool Stone::IsAdjacentTo(const Stone & stoneToCheck)
