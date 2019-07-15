@@ -55,6 +55,31 @@ void Stone::Draw()
 	TextureManager::Draw(this);
 }
 
+const char * Stone::StoneTypeToString(StoneType stoneType)
+{
+	switch (stoneType)
+	{
+	case diamond:
+		return "DIAMOND / WHITE";
+		break;
+	case flame:
+		return "FLAME / ORANGE";
+		break;
+	case moon:
+		return "MOON / BLUE";
+		break;
+	case skull:
+		return "SKULL / BLACK";
+		break;
+	case star:
+		return "STAR / PINK";
+		break;
+	default:
+		break;
+	}
+	;
+}
+
 Stone::~Stone()
 {
 }

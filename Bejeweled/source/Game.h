@@ -22,6 +22,7 @@ public:
 	void Clean();
 
 	inline bool IsRunning() const { return isRunning; }
+	static void RenderDrawing();
 	static SDL_Renderer* pRenderer;
 	static void QuitGame();
 

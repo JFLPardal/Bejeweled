@@ -24,6 +24,7 @@ public:
 	bool IsAdjacentTo(const Stone& stoneToCheck);
 	void Draw();
 
+	static const char* StoneTypeToString(StoneType stoneType);
 	~Stone();
 private:
 	StoneType stoneType;

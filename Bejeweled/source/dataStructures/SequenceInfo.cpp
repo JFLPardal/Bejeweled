@@ -7,7 +7,7 @@ SequenceInfo::SequenceInfo()
 {
 }
 
-SequenceInfo::SequenceInfo(const Vector2& firstStone, const Vector2& lastStone, bool isSequence)
+SequenceInfo::SequenceInfo(const Vector2& firstStone, const Vector2& lastStone, bool isSequence, StoneType inspectingStoneType)
 	:isSequence(isSequence), sequenceIndexes(std::vector<Vector2>())
 {
 	if(isSequence)
@@ -15,14 +15,13 @@ SequenceInfo::SequenceInfo(const Vector2& firstStone, const Vector2& lastStone, 
 		if (firstStone.X() == lastStone.X()) // sequenceIndexes will contain part of a column
 		{
 			sequenceIsColumn = true;
-			printf("sequence is column.\n");
+			//printf("column.\n");
 			int sequenceX = lastStone.X();
 			if (firstStone.Y() < lastStone.Y()) // clicked sequence was from top to bottom
 			{
 				for (int y = firstStone.Y(); y <= lastStone.Y(); y++) 
 				{
 					sequenceIndexes.emplace_back(Vector2(sequenceX, y));
-					printf("Added (%d,%d) to sequenceIndexes.\n", sequenceX, y);
 				}
 			}
 			else // clicked sequence was from bottom to top
@@ -30,14 +29,13 @@ SequenceInfo::SequenceInfo(const Vector2& firstStone, const Vector2& lastStone, 
 				for (int y = lastStone.Y(); y <= firstStone.Y(); y++)
 				{
 					sequenceIndexes.emplace_back(Vector2(sequenceX, y));
-					printf("Added (%d,%d) to sequenceIndexes.\n", sequenceX, y);
 				}
 			}
 		}
 		else
 		{
 			sequenceIsColumn = false;
-			printf("sequence is row.\n");
+			//printf("row.\n");
 			int lastStoneInSequenceX = lastStone.X();
 			int sequenceY = lastStone.Y();
 			if (firstStone.X() < lastStone.X()) // clicked sequence was from left to right
@@ -46,7 +44,6 @@ SequenceInfo::SequenceInfo(const Vector2& firstStone, const Vector2& lastStone, 
 				for (int x = firstStone.X(); x <= lastStoneX; x++)
 				{
 					sequenceIndexes.emplace_back(Vector2(x, sequenceY));
-					printf("Added (%d,%d) to sequenceIndexes.\n", x, sequenceY);
 				}
 			}
 			else // clicked sequence was from right to left
@@ -55,10 +52,10 @@ SequenceInfo::SequenceInfo(const Vector2& firstStone, const Vector2& lastStone, 
 				for (int x = lastStone.X(); x <= firstStoneX; x++)
 				{
 					sequenceIndexes.emplace_back(Vector2(x, sequenceY));
-					printf("Added (%d,%d) to sequenceIndexes.\n", x, sequenceY);
 				}
 			}
 		}
+		printf("Sequence of %d %s stones made.\n ", sequenceIndexes.size(), Stone::StoneTypeToString(inspectingStoneType));
 	}
 }
 

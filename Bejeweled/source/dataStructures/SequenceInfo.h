@@ -4,12 +4,13 @@
 #include "Vector2.h"
 
 class Stone;
+enum StoneType; 
 
 class SequenceInfo
 {
 public:
 	SequenceInfo();
-	SequenceInfo(const Vector2& firstStone, const Vector2& lastStone, bool isSequence);
+	SequenceInfo(const Vector2& firstStone, const Vector2& lastStone, bool isSequence, StoneType inspectingStoneType);
 	~SequenceInfo();
 
 	bool IsSequence() { return isSequence; }

@@ -21,11 +21,12 @@ public:
 	Stone GetStoneInPosition(const Vector2& stonePosition) const;
 
 	Stone GridClicked(SDL_Event& event);
-	//SequenceInfo StoneSwapSuccesful(const Stone& firstStone, const Stone& secondStone); 
 	void UpdateStonesInGrid(SequenceInfo stonesToDelete);
 
 	void SwapStonesAndCheckForSequences(Stone& firstStone, Stone& secondStone);
-	void CheckForSequences(Vector2& firstStoneIndex, Vector2& secondStoneIndex);
+	void DrawSwappedStones(const Vector2 &firstStoneIndex, const Vector2 &secondStoneIndex);
+	void CheckGridForSequences();
+	void CheckForSequencesAfterSwapping(Vector2& firstStoneIndex, Vector2& secondStoneIndex);
 	void CheckForSequencesOnIndividualIndex(Vector2& firstStoneIndex);
 	bool AreStonesAdjacent(const Stone& firstStone, const Stone& secondStone);
 	bool AreStonesAdjacent(const Vector2& firstStone, const Vector2& secondStone);
@@ -34,12 +35,12 @@ public:
 	Stone& operator[](const Vector2& position);
 private:
 	std::array<Stone, GRID_DIMENSION> grid;
-	//std::array<Stone, GRID_CONSTANTS::GRID_WIDTH * GRID_CONSTANTS::GRID_WIDTH> grid;
 
 	void Init();
 
 	Vector2 inline CalculateStonePosition(int x, int y);
 	int inline CalculateIndex(int x, int y);
+	int inline CalculateIndex(Vector2 vector);
 	StoneType inline GetRandomStoneType();
 
 	Stone& FindStoneInClickPosition(SDL_MouseMotionEvent positionOfClick);

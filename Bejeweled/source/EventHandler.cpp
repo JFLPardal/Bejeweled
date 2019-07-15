@@ -22,7 +22,6 @@ void EventHandler::CheckForEvents(Grid& grid, ClickHandler& clickHandler)
 		Game::QuitGame();
 		break;
 	case SDL_MOUSEBUTTONDOWN:
-		printf("pressed \n");
 		if (UtilityFunctions::IsInsideOf(event.motion, grid.GetGridRect()))
 		{
 			Stone clickedStone = grid.GridClicked(event);

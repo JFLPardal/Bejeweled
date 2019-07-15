@@ -61,6 +61,11 @@ void Game::Clean()
 	SDL_Quit(); // shut sdl subsystems
 }
 
+void Game::RenderDrawing()
+{
+	SDL_RenderPresent(pRenderer);
+}
+
 void Game::QuitGame()
 {
 	isRunning = false;
