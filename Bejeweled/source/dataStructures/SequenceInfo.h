@@ -9,15 +9,15 @@ class SequenceInfo
 {
 public:
 	SequenceInfo();
-	SequenceInfo(const Stone& firstStone, const Stone& lastStone);
+	SequenceInfo(const Vector2& firstStone, const Vector2& lastStone, bool isSequence);
 	~SequenceInfo();
 
 	bool IsSequence() { return isSequence; }
-	bool SequenceIsColumn() { return deleteColumn; }
+	bool SequenceIsColumn() { return sequenceIsColumn; }
 	int GetBottomCoordenate();
 	std::vector<Vector2> GetStonesToDelete() { return sequenceIndexes; }
 private:
 	bool isSequence;
-	bool deleteColumn;
+	bool sequenceIsColumn;
 	std::vector<Vector2> sequenceIndexes;
 };

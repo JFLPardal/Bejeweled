@@ -7,49 +7,65 @@ SequenceInfo::SequenceInfo()
 {
 }
 
-SequenceInfo::SequenceInfo(const Stone& firstStone, const Stone& lastStone)
-	:isSequence(true), sequenceIndexes(std::vector<Vector2>())
+SequenceInfo::SequenceInfo(const Vector2& firstStone, const Vector2& lastStone, bool isSequence)
+	:isSequence(isSequence), sequenceIndexes(std::vector<Vector2>())
 {
-	if (firstStone.GetIndexInGrid().X() == lastStone.GetIndexInGrid().X())// sequenceIndexes will contain part of a column
+	if(isSequence)
 	{
-		deleteColumn = true;
-		printf("sequence is column.\n");
-		int sequenceX = lastStone.GetIndexInGrid().X();
-		if (firstStone.GetIndexInGrid().Y() < lastStone.GetIndexInGrid().Y())
+		if (firstStone.X() == lastStone.X()) // sequenceIndexes will contain part of a column
 		{
-			for (int y = firstStone.GetIndexInGrid().Y(); y <= lastStone.GetIndexInGrid().Y(); y++) 
+			sequenceIsColumn = true;
+			printf("sequence is column.\n");
+			int sequenceX = lastStone.X();
+			if (firstStone.Y() < lastStone.Y()) // clicked sequence was from top to bottom
 			{
-				sequenceIndexes.emplace_back(Vector2(sequenceX, y));
-				printf("Added (%d,%d) to sequenceIndexes.\n", sequenceX, y);
+				for (int y = firstStone.Y(); y <= lastStone.Y(); y++) 
+				{
+					sequenceIndexes.emplace_back(Vector2(sequenceX, y));
+					printf("Added (%d,%d) to sequenceIndexes.\n", sequenceX, y);
+				}
+			}
+			else // clicked sequence was from bottom to top
+			{
+				for (int y = lastStone.Y(); y <= firstStone.Y(); y++)
+				{
+					sequenceIndexes.emplace_back(Vector2(sequenceX, y));
+					printf("Added (%d,%d) to sequenceIndexes with alt fucntion.\n", sequenceX, y);
+				}
 			}
 		}
 		else
 		{
-			for (int y = lastStone.GetIndexInGrid().Y(); y <= firstStone.GetIndexInGrid().Y(); y++) // if the programmer passed the lastStone as the firstStone
+			sequenceIsColumn = false;
+			printf("sequence is row.\n");
+			int lastStoneInSequenceX = lastStone.X();
+			int sequenceY = lastStone.Y();
+			if (firstStone.X() < lastStone.X()) // clicked sequence was from left to right
 			{
-				sequenceIndexes.emplace_back(Vector2(sequenceX, y));
-				printf("Added (%d,%d) to sequenceIndexes with alt fucntion.\n", sequenceX, y);
+				int lastStoneX = lastStone.X();
+				for (int x = firstStone.X(); x <= lastStoneX; x++)
+				{
+					sequenceIndexes.emplace_back(Vector2(x, sequenceY));
+					printf("Added (%d,%d) to sequenceIndexes.\n", x, sequenceY);
+				}
+			}
+			else // clicked sequence was from right to left
+			{
+				int firstStoneX = firstStone.X();
+				for (int x = lastStone.X(); x <= firstStoneX; x++)
+				{
+					sequenceIndexes.emplace_back(Vector2(x, sequenceY));
+					printf("Added (%d,%d) to sequenceIndexes.\n", x, sequenceY);
+				}
 			}
 		}
-	}
-	else
-	{
-		deleteColumn = false;
-		printf("sequence is row.\n");
-		int lastStoneInSequenceX = lastStone.GetIndexInGrid().X();
-		int sequenceY = lastStone.GetIndexInGrid().Y();
-		for (int x = firstStone.GetIndexInGrid().X(); x <= lastStone.GetIndexInGrid().X(); x++)
-		{
-			sequenceIndexes.emplace_back(Vector2(x, sequenceY));
-			printf("Added (%d,%d) to sequenceIndexes.\n", x, sequenceY);
-		}
+		printf("sequence Index has: %d elements.\n ", sequenceIndexes.size());
 	}
 }
 
-// UPDATE THIS, NOT WORKING PROPERLY
 int SequenceInfo::GetBottomCoordenate()
 {
-	int highestY = 0; // I don't like this name, it's the highest Y in this coordenate system but it is the lowest position visually, for math consistency this is the name I will go with
+	int highestY = 0; // I don't like this name, it's the highest Y in this coordenate system but it is the lowest position visually, for logic's consistency this is the name I will go with
 	for (auto& vector : sequenceIndexes)
 	{
 		int indexY = vector.Y();

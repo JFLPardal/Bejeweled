@@ -12,15 +12,10 @@ void ClickHandler::StoneClicked(Stone& clickedStone, Grid& grid)
 	printf("type of clicked stone: %d.\n", clickedStone.GetStoneType());
 	if (stoneIsSelected)
 	{
-		if (WasSecondClickAdjacentToFirst(clickedStone))
+		if (grid.AreStonesAdjacent(firstClickedStone, clickedStone))
 		{
 			printf("clicked ADJACENT of type %d.\n", clickedStone.GetStoneType());
-			SequenceInfo possibleSequence = grid.StoneSwapSuccesful(firstClickedStone, clickedStone);
-			if (possibleSequence.IsSequence())
-			{
-				// grid.ConfirmSwap(firstClickedStone, clickedStone);
-				grid.UpdateStonesInGrid(possibleSequence);
-			}
+			grid.SwapStonesAndCheckForSequences(firstClickedStone, clickedStone);
 		}
 		else
 		{

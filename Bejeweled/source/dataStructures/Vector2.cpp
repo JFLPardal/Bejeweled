@@ -47,6 +47,11 @@ std::ostream& operator<<(std::ostream& oStream, Vector2& vector)
 	return oStream;
 }
 
+bool operator==(const Vector2& vector1, const Vector2& vector2)
+{
+	return (vector1.x == vector2.x && vector1.y == vector2.y);
+}
+
 Vector2& operator+=(Vector2& vectorToUpdate, const Vector2& vectorIncrement)
 {
 	vectorToUpdate.Add(vectorIncrement);
@@ -67,7 +72,7 @@ Vector2& Vector2::Add(const Vector2& vectorToAdd)
 	return *this;
 }
 
-bool Vector2::IsAdjacentTo(const Vector2& vectorToCheck)
+bool Vector2::IsAdjacentTo(const Vector2& vectorToCheck) const
 {
 	if (x == vectorToCheck.x)
 	{
