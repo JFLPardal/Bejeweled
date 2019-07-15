@@ -35,13 +35,6 @@ void Game::Init()
 
 void Game::HandleEvents()
 {
-	SDL_Event event;
-	SDL_PollEvent(&event);
-	if (event.type == SDL_QUIT)
-	{
-		SetIsRunning(false);
-	}
-	// TODO: move the above to EventHandler class
 	pEventHandler->CheckForEvents(*pGrid, *pClickHandler);
 }
 

@@ -6,54 +6,33 @@
 #include "gameEntities/ClickHandler.h"
 #include "UtilityFunctions.h"
 
-enum EventQueueState { Empty = 0, EventsPending = 1 };
-
 EventHandler::EventHandler()
 {
 }
 
-// this function checks for pending events once per frame
 void EventHandler::CheckForEvents(Grid& grid, ClickHandler& clickHandler)
 {
-	SDL_Event event; 
+	SDL_Event event;
 	SDL_PollEvent(&event);
-	/*while (SDL_PollEvent(&event) != 0)//EventQueueState::EventsPending)
-	{*/
-		switch (event.type)
+
+	switch (event.type)
+	{
+	case SDL_QUIT:
+		//SetIsRunning(false);
+		break;
+	case SDL_MOUSEBUTTONDOWN:
+		printf("pressed \n");
+		if (UtilityFunctions::IsInsideOf(event.motion, grid.GetGridRect()))
 		{
-		case SDL_MOUSEBUTTONDOWN:
-			std::cout << "event" << std::endl;
-			if (UtilityFunctions::IsInsideOf(event.motion, grid.GetGridRect()))
-			{
-				Stone clickedStone = grid.GridClicked(event);
-				clickHandler.StoneClicked(clickedStone, grid);
-			}
-			else
-			{
-				clickHandler.ClickedOutsideTheGrid();
-			}
-			break;
-		default:
-			break;
-		}/*
-		if (eventType == SDL_MOUSEBUTTONDOWN && event.button.button == SDL_BUTTON_LEFT)
-		{
-			std::cout << "event" << std::endl;
-			if (UtilityFunctions::IsInsideOf(event.motion, grid.GetGridRect()))
-			{
-				Stone clickedStone = grid.GridClicked(event);
-				clickHandler.StoneClicked(clickedStone);
-			}
-			else
-			{
-				clickHandler.ClickedOutsideTheGrid();
-			}
+			Stone clickedStone = grid.GridClicked(event);
+			clickHandler.StoneClicked(clickedStone, grid);
 		}
-		if (eventType == SDL_EventType::SDL_MOUSEMOTION)
+		else
 		{
-			if (event.motion.x > 512)
-			{
-			}
-		}*/
-	//}
+			clickHandler.ClickedOutsideTheGrid();
+		}
+		break;
+	default:
+		break;
+	}
 }

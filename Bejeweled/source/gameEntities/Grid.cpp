@@ -25,12 +25,19 @@ void Grid::Init()
 
 	for (int x = 0; x < GC::GRID_WIDTH; x++) // delete this for and update next for to y = 0
 	{
-		if (x == 2 || x == 4)
-			grid[CalculateIndex(x, 1)] = Stone(Vector2(x, 1), CalculateStonePosition(x, 1), StoneType::skull);
+		if (x == 5 || x == 4||  x == 7)
+			grid[CalculateIndex(x, 0)] = Stone(Vector2(x, 0), CalculateStonePosition(x, 0), StoneType::skull);
 		else
 			grid[CalculateIndex(x, 0)] = Stone(Vector2(x, 0), CalculateStonePosition(x, 0), GetRandomStoneType());
 	}
-	grid[CalculateIndex(3, 0)] = Stone(Vector2(3, 0), CalculateStonePosition(3, 0), StoneType::skull);
+	for (int x = 0; x < GC::GRID_WIDTH; x++) // delete this for and update next for to y = 0
+	{
+		if (x == 5 || x == 4 || x == 7 || x == 0 || x == 2 || x == 3)
+			grid[CalculateIndex(x, 7)] = Stone(Vector2(x, 7), CalculateStonePosition(x, 7), StoneType::skull);
+		else
+			grid[CalculateIndex(x, 0)] = Stone(Vector2(x, 0), CalculateStonePosition(x, 0), GetRandomStoneType());
+	}
+	//grid[CalculateIndex(3, 0)] = Stone(Vector2(3, 0), CalculateStonePosition(3, 0), StoneType::skull);
 }
 
 void Grid::Draw()
@@ -124,13 +131,20 @@ SequenceInfo Grid::CheckIfSwapMadeSequence(Vector2& gridIndexToInspect)
 		Vector2 directionToCheck = Vector2::GetVectorFromDirection((SwapDirection)i);
 		if (directionToCheck.Y() == 0) // will check adjacency for the sides
 		{
-			if(gridIndexToInspect.X() != 0 && gridIndexToInspect.X() != GRID_CONSTANTS::GRID_WIDTH-1)
-				{
+			if (gridIndexToInspect.X() == 0 && directionToCheck == Vector2::GetVectorFromDirection(SwapDirection::left))
+			{
+			}
+			else if (gridIndexToInspect.X() == GRID_CONSTANTS::GRID_WIDTH - 1 &&
+					directionToCheck == Vector2::GetVectorFromDirection(SwapDirection::right))
+			{
+			}
+			else 
+			{
 				int sequenceElements = 1;
-				for (int i = gridIndexToInspect.X(); i < GRID_CONSTANTS::GRID_WIDTH; i++)
+				for (int i = gridIndexToInspect.X(); i < GRID_CONSTANTS::GRID_WIDTH-1 || i > 0; i += directionToCheck.X())
 				{
 					int indexToCheck = gridIndexToInspect.Y() * GRID_CONSTANTS::GRID_WIDTH + gridIndexToInspect.X() + directionToCheck.X() * sequenceElements;
-					if (grid[indexToCheck].GetStoneType() == inspectingStoneType)
+					if (indexToCheck < GRID_DIMENSION - 1 && indexToCheck >= 0 && grid[indexToCheck].GetStoneType() == inspectingStoneType)
 					{
 						sequenceElements++;
 						printf("Stone of equal type.\n");
@@ -152,16 +166,16 @@ SequenceInfo Grid::CheckIfSwapMadeSequence(Vector2& gridIndexToInspect)
 								{
 									Vector2 indexPreviouslyTested = grid[CalculateIndex(previouslyTestedX, previouslyTestedY)].GetIndexInGrid();
 									Vector2 indexOpposedToTested = grid[CalculateIndex(testingFor2ndOpposite, previouslyTestedY)].GetIndexInGrid();
-									//sequenceElements++; // redundant if return is before 'if (sequenceElements >= 3)'
 									isSequence = true;
 									printf("triangle of 4!\n");
+
 									return SequenceInfo(indexPreviouslyTested, indexOpposedToTested, isSequence);
 								}
-									Vector2 indexPreviouslyTested = grid[CalculateIndex(previouslyTestedX, previouslyTestedY)].GetIndexInGrid();
+								Vector2 indexPreviouslyTested = grid[CalculateIndex(previouslyTestedX, previouslyTestedY)].GetIndexInGrid();
 								Vector2 indexOpposedToTested = grid[CalculateIndex(testingFor1stOpposite, previouslyTestedY)].GetIndexInGrid();
-								//sequenceElements++; // redundant if return is before 'if (sequenceElements >= 3)'
 								isSequence = true;
 								printf("triangle of 3!\n");
+
 								return SequenceInfo(indexPreviouslyTested, indexOpposedToTested, isSequence);
 							}
 						}
@@ -178,24 +192,71 @@ SequenceInfo Grid::CheckIfSwapMadeSequence(Vector2& gridIndexToInspect)
 					isSequence = true;
 				}
 			}
-			else if (gridIndexToInspect.X() == 0 && 
-				     directionToCheck == Vector2::GetVectorFromDirection(SwapDirection::left))
-			{
-				break;
-			}else if(gridIndexToInspect.X() == GRID_CONSTANTS::GRID_WIDTH-1 && 
-					 directionToCheck == Vector2::GetVectorFromDirection(SwapDirection::right))
-			{
-				break;
-			}
-		}/*
+		}
 		else
 		{
-			int sequenceElements = 1;
-			for (int x = gridIndexToInspect.GetIndexInGrid().X(); x < GRID_CONSTANTS::GRID_WIDTH; i++)
+			if (gridIndexToInspect.Y() == 0 && directionToCheck == Vector2::GetVectorFromDirection(SwapDirection::up))
 			{
-				if (grid[(gridIndexToInspect.GetIndexInGrid().Y() + directionToCheck.Y() * sequenceElements) + //directionToCheck.X() gridIndexToInspect.GetIndexInGrid().Y])
 			}
-		}*/
+			else if (gridIndexToInspect.Y() == GRID_CONSTANTS::GRID_HEIGHT - 1 &&
+				directionToCheck == Vector2::GetVectorFromDirection(SwapDirection::down))
+			{
+			}
+			else
+			{
+				int sequenceElements = 1;
+				for (int i = gridIndexToInspect.Y(); i < GRID_CONSTANTS::GRID_HEIGHT - 1 || i > 0; i += directionToCheck.Y())
+				{
+					int indexToCheck = (gridIndexToInspect.Y() + directionToCheck.Y() * sequenceElements) * GRID_CONSTANTS::GRID_WIDTH + gridIndexToInspect.X() ;
+					if (indexToCheck < GRID_DIMENSION - 1 && indexToCheck >= 0 && grid[indexToCheck].GetStoneType() == inspectingStoneType)
+					{
+						sequenceElements++;
+						printf("Stone of equal type.\n");
+					}
+					else
+					{
+						if (sequenceElements == 2) // check the opposite direction to try to find the 3rd and 4th
+						{
+							int attemptToFindAdjacent = 1;
+							int previouslyTestedY = gridIndexToInspect.Y() + directionToCheck.Y();
+							int testingFor1stOpposite = gridIndexToInspect.Y() + directionToCheck.Y() * (-attemptToFindAdjacent);
+							int previouslyTestedX = gridIndexToInspect.X();
+
+							if (testingFor1stOpposite >= 0 && testingFor1stOpposite < GRID_CONSTANTS::GRID_HEIGHT && grid[CalculateIndex(previouslyTestedX, testingFor1stOpposite)].GetStoneType() == inspectingStoneType)
+							{
+								attemptToFindAdjacent++;
+								int testingFor2ndOpposite = gridIndexToInspect.Y() + directionToCheck.Y() * (-attemptToFindAdjacent);
+								if (testingFor2ndOpposite >= 0 && testingFor2ndOpposite < GRID_CONSTANTS::GRID_WIDTH &&  grid[CalculateIndex(previouslyTestedX, testingFor2ndOpposite)].GetStoneType() == inspectingStoneType)
+								{
+									Vector2 indexPreviouslyTested = grid[CalculateIndex(previouslyTestedX, previouslyTestedY)].GetIndexInGrid();
+									Vector2 indexOpposedToTested = grid[CalculateIndex(previouslyTestedX, testingFor2ndOpposite)].GetIndexInGrid();
+									isSequence = true;
+									printf("triangle of 4!\n");
+
+									return SequenceInfo(indexPreviouslyTested, indexOpposedToTested, isSequence);
+								}
+								Vector2 indexPreviouslyTested = grid[CalculateIndex(previouslyTestedX, previouslyTestedY)].GetIndexInGrid();
+								Vector2 indexOpposedToTested = grid[CalculateIndex(previouslyTestedX, testingFor1stOpposite)].GetIndexInGrid();
+								isSequence = true;
+								printf("triangle of 3!\n");
+
+								return SequenceInfo(indexPreviouslyTested, indexOpposedToTested, isSequence);
+							}
+						}
+						if (sequenceElements >= 3)
+						{
+							sequenceEndIndex = grid[(gridIndexToInspect.Y() + directionToCheck.Y() * (sequenceElements - 1)) * GRID_CONSTANTS::GRID_WIDTH + gridIndexToInspect.X()].GetIndexInGrid();
+						}
+						break;
+					}
+				}
+				if (sequenceElements >= 3)
+				{
+					printf("Sequence made.\n");
+					isSequence = true;
+				}
+			}
+		}
 	}
 	return SequenceInfo(gridIndexToInspect, sequenceEndIndex, isSequence);
 }

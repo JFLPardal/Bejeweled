@@ -23,7 +23,7 @@ int SDL_main(int argc, char *argv[])
 		game->Update();
 		game->Draw();
 
-		//EnforceFrameRate(frameStart);
+		EnforceFrameRate(frameStart);
 	}
 
 	game->Clean();
