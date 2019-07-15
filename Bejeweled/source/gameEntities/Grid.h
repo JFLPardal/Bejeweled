@@ -25,6 +25,8 @@ public:
 	void UpdateStonesInGrid(SequenceInfo stonesToDelete);
 
 	void SwapStonesAndCheckForSequences(Stone& firstStone, Stone& secondStone);
+	void CheckForSequences(Vector2& firstStoneIndex, Vector2& secondStoneIndex);
+	void CheckForSequencesOnIndividualIndex(Vector2& firstStoneIndex);
 	bool AreStonesAdjacent(const Stone& firstStone, const Stone& secondStone);
 	bool AreStonesAdjacent(const Vector2& firstStone, const Vector2& secondStone);
 

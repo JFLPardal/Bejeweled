@@ -2,6 +2,7 @@
 #include "preCompiledHeader.h"
 
 #include "EventHandler.h"
+#include "Game.h"
 #include "gameEntities/Grid.h"
 #include "gameEntities/ClickHandler.h"
 #include "UtilityFunctions.h"
@@ -18,7 +19,7 @@ void EventHandler::CheckForEvents(Grid& grid, ClickHandler& clickHandler)
 	switch (event.type)
 	{
 	case SDL_QUIT:
-		//SetIsRunning(false);
+		Game::QuitGame();
 		break;
 	case SDL_MOUSEBUTTONDOWN:
 		printf("pressed \n");

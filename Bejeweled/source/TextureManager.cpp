@@ -46,10 +46,9 @@ SDL_Texture* TextureManager::GetStoneTexture(StoneType stoneType)
 
 void TextureManager::Draw(const Stone* stone)
 {
-	Vector2 stonePosition = stone->GetPosition();
+	Vector2 stonePosition = stone->GetSpritePosition();
 	destinationRect.x = stonePosition.X();
 	destinationRect.y = stonePosition.Y();
-
 	SDL_RenderCopy(Game::pRenderer, stoneSprites[stone->GetStoneType()], NULL, &destinationRect);
 }
 

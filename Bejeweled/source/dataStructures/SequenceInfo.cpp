@@ -30,7 +30,7 @@ SequenceInfo::SequenceInfo(const Vector2& firstStone, const Vector2& lastStone, 
 				for (int y = lastStone.Y(); y <= firstStone.Y(); y++)
 				{
 					sequenceIndexes.emplace_back(Vector2(sequenceX, y));
-					printf("Added (%d,%d) to sequenceIndexes with alt fucntion.\n", sequenceX, y);
+					printf("Added (%d,%d) to sequenceIndexes.\n", sequenceX, y);
 				}
 			}
 		}
@@ -59,7 +59,6 @@ SequenceInfo::SequenceInfo(const Vector2& firstStone, const Vector2& lastStone, 
 				}
 			}
 		}
-		printf("sequence Index has: %d elements.\n ", sequenceIndexes.size());
 	}
 }
 

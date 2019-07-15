@@ -13,7 +13,7 @@ Stone::Stone(Vector2 indexInGrid, Vector2 pos, StoneType stoneType)
 {
 }
 
-Vector2 Stone::GetPosition() const
+Vector2 Stone::GetSpritePosition() const
 {
 	return Vector2(rect.x, rect.y);
 }
@@ -31,12 +31,12 @@ void Stone::UpdateStoneType(StoneType newType)
 {
 	stoneType = newType;
 }
-/*
+
 void Stone::SetNewPosition(Vector2 newPosition)
 {
 	rect.x = newPosition.X();
 	rect.y = newPosition.Y();
-}*/
+}
 
 void Stone::UpdateSpritePosition(SwapDirection differenceFromOriginalPosition, int timesToUpdate)
 {

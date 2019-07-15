@@ -76,6 +76,7 @@ void Grid::UpdateStonesInGrid(SequenceInfo stonesToDelete)
 	{
 		for (auto& stoneGridIndex : stonesToDelete.GetStonesToDelete())
 		{
+
 			UpdateRowsAboveSequence(stoneGridIndex);
 		}
 	}
@@ -88,7 +89,21 @@ void Grid::SwapStonesAndCheckForSequences(Stone& firstStone, Stone& secondStone)
 
 	SwapAdjacentStoneTypes(firstStoneIndex, secondStoneIndex);
 	// add draw both stones
+	firstStone.Draw();
+	secondStone.Draw();
+	SDL_Delay(500);
 	grid[0];	// delete
+	CheckForSequences(firstStoneIndex, secondStoneIndex);
+
+	for (int index = GRID_DIMENSION-1; index >= 0; index--)
+	{
+		Vector2 indexToCheck = grid[index].GetIndexInGrid();
+		CheckForSequencesOnIndividualIndex(indexToCheck);
+	}
+}
+
+void Grid::CheckForSequences(Vector2& firstStoneIndex, Vector2& secondStoneIndex)
+{
 	SequenceInfo possibleSequenceForOneStone = CheckIfSwapMadeSequence(secondStoneIndex);
 	SequenceInfo possibleSequenceForOtherStone = CheckIfSwapMadeSequence(firstStoneIndex);
 
@@ -103,10 +118,21 @@ void Grid::SwapStonesAndCheckForSequences(Stone& firstStone, Stone& secondStone)
 		printf("Sequence was made.\n");
 		UpdateStonesInGrid(possibleSequenceForOtherStone);
 	}
-	else if(!possibleSequenceForOneStone.IsSequence()) // if neither swapped stone produced a sequence
+	else if (!possibleSequenceForOneStone.IsSequence()) // if neither produced a sequence swapped stones back 
 	{
-		SwapAdjacentStoneTypes(firstStone.GetIndexInGrid(), secondStone.GetIndexInGrid());
+		SwapAdjacentStoneTypes(firstStoneIndex, secondStoneIndex);
 		printf("swapped stones back.\n");
+	}
+}
+
+void Grid::CheckForSequencesOnIndividualIndex(Vector2& firstStoneIndex)
+{
+	SequenceInfo possibleSequenceForOtherStone = CheckIfSwapMadeSequence(firstStoneIndex);
+
+	if (possibleSequenceForOtherStone.IsSequence())
+	{
+		printf("Sequence was made during alone search.\n");
+		UpdateStonesInGrid(possibleSequenceForOtherStone);
 	}
 }
 
@@ -116,9 +142,13 @@ void Grid::SwapAdjacentStoneTypes(const Vector2& firstStone, const Vector2& seco
 	int firstStoneIndex = firstStone.Y() * GRID_CONSTANTS::GRID_WIDTH + firstStone.X();
 	int secondStoneIndex = secondStone.Y() * GRID_CONSTANTS::GRID_WIDTH + secondStone.X();
 	StoneType firstStoneType = grid[firstStoneIndex].GetStoneType();
+	//Vector2 firstStoneSpritePosition = grid[firstStoneIndex].GetSpritePosition();
 
 	grid[firstStoneIndex].UpdateStoneType(grid[secondStoneIndex].GetStoneType());
+	//grid[firstStoneIndex].SetNewPosition(grid[secondStoneIndex].GetSpritePosition());
+
 	grid[secondStoneIndex].UpdateStoneType(firstStoneType);
+	//grid[secondStoneIndex].SetNewPosition(firstStoneSpritePosition);
 }
 
 SequenceInfo Grid::CheckIfSwapMadeSequence(Vector2& gridIndexToInspect)
@@ -147,7 +177,6 @@ SequenceInfo Grid::CheckIfSwapMadeSequence(Vector2& gridIndexToInspect)
 					if (indexToCheck < GRID_DIMENSION - 1 && indexToCheck >= 0 && grid[indexToCheck].GetStoneType() == inspectingStoneType)
 					{
 						sequenceElements++;
-						printf("Stone of equal type.\n");
 					}
 					else
 					{
@@ -211,7 +240,6 @@ SequenceInfo Grid::CheckIfSwapMadeSequence(Vector2& gridIndexToInspect)
 					if (indexToCheck < GRID_DIMENSION - 1 && indexToCheck >= 0 && grid[indexToCheck].GetStoneType() == inspectingStoneType)
 					{
 						sequenceElements++;
-						printf("Stone of equal type.\n");
 					}
 					else
 					{
@@ -359,7 +387,7 @@ std::ostream& operator<<(std::ostream& oStream, Grid& grid)
 		gridAsString.append("\n"); 
 		for (int x = 0; x < GC::GRID_WIDTH; x++)
 		{
-			gridAsString.append(grid[Vector2(x, y)].GetPosition().ToString());
+			gridAsString.append(grid[Vector2(x, y)].GetSpritePosition().ToString());
 		}
 	}
 	oStream << gridAsString;

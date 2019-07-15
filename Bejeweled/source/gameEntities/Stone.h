@@ -14,11 +14,11 @@ public:
 	Stone();
 	Stone(Vector2 indexInGrid, Vector2 pos, StoneType stoneType);
 
-	Vector2 GetPosition()const;
+	Vector2 GetSpritePosition()const;
 	Vector2 GetIndexInGrid() const;
 	StoneType GetStoneType() const;
 	void UpdateStoneType(StoneType newType);
-	//void SetNewPosition(Vector2 newPosition);
+	void SetNewPosition(Vector2 newPosition);
 	void UpdateSpritePosition(SwapDirection differenceFromOriginalPosition, int timesToUpdate = 1);
 
 	bool IsAdjacentTo(const Stone& stoneToCheck);

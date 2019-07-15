@@ -6,6 +6,7 @@
 #include "TextureManager.h"
 
 SDL_Renderer* Game::pRenderer = nullptr;
+bool Game::isRunning;
 
 Game::Game()
 	:pEventHandler(new EventHandler())
@@ -58,6 +59,11 @@ void Game::Clean()
 	delete pGrid;
 	delete pClickHandler;
 	SDL_Quit(); // shut sdl subsystems
+}
+
+void Game::QuitGame()
+{
+	isRunning = false;
 }
 
 bool Game::TryCreateWindow(const char* title, int initialWindowX, int initialWindowY, int windowWidth, int windowHeight)

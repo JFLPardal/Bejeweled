@@ -23,8 +23,10 @@ public:
 
 	inline bool IsRunning() const { return isRunning; }
 	static SDL_Renderer* pRenderer;
+	static void QuitGame();
+
 private:
-	bool isRunning;
+	static bool isRunning;
 	SDL_Window* pWindow = nullptr;
 	EventHandler* pEventHandler= nullptr;
 	Grid* pGrid = nullptr;
